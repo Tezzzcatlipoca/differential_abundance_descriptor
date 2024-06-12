@@ -10,6 +10,7 @@ DATA_FILE = "differential_genera_input.txt"
 ABSTRACT = "Recently, the potential role of gut microbiome in metabolic diseases has been revealed, especially in cardiovascular diseases. Hypertension is one of the most prevalent cardiovascular diseases worldwide, yet whether gut microbiota dysbiosis participates in the development of hypertension remains largely unknown. To investigate this issue, we carried out comprehensive metagenomic and metabolomic analyses in a cohort of 41 healthy controls, 56 subjects with pre-hypertension, 99 individuals with primary hypertension, and performed fecal microbiota transplantation from patients to germ-free mice."
 OUTPUT_FILE = "output.txt"
 AI_WAIT_TIME = 5
+MAX_TOKENS = 2500
 
 
 def convert_file_to_json(txt_file_path: str) -> str:
@@ -25,7 +26,7 @@ def convert_file_to_json(txt_file_path: str) -> str:
     return str(json_data)
 
 
-def query_openai(question: str, data_file: str = ''):
+def query_openai(question: str, data_file: str = '', tmax_tokens=MAX_TOKENS):
     assert question != "", "Empty question to the model!"
     api_key = os.environ['OPENAI_DISSERTATION_KEY']
     client = OpenAI(api_key=api_key)
@@ -42,7 +43,7 @@ def query_openai(question: str, data_file: str = ''):
         ],
         model="gpt-3.5-turbo-0125",
         #model="gpt-4o",
-        max_tokens=2500
+        max_tokens=tmax_tokens
     )
     time.sleep(AI_WAIT_TIME)
     print(chat_completion.choices[0].message.content)
