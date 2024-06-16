@@ -14,7 +14,7 @@ def get_nature_links(keyword):
         url = a['href']
         if url.startswith('/articles/'):
             full_url = f"https://www.nature.com{url}"
-            links.append((title, full_url))
+            links.append([title, full_url])
     return links
 
 
