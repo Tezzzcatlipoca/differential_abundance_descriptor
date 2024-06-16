@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from open_ai import query_openai
 from gemini import query_gemini
-from article_crawler import get_nature_links
+from article_crawler import *
 import requests
 import time
 import datetime
@@ -205,7 +205,7 @@ def draft_article(consolidated_table:str, condition:str, papers:list) -> str:
 def generate_report(model="openai"):
     # Find relevant literature
     user_parameters = ask_parameters()
-    docs_list = get_nature_links("microbiome and " + user_parameters['%condition%'][0])
+    docs_list = get_mixed_links("microbiome and " + user_parameters['%condition%'][0])
     # Add other media besides Nature, then re-order them randomly
 
     # Inspect each page, check for elements.
