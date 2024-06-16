@@ -1,3 +1,4 @@
+import random
 import requests
 from bs4 import BeautifulSoup
 import time
@@ -18,8 +19,74 @@ def get_nature_links(keyword):
     return links
 
 
-# How to use the above:
-#keyword = "microbiome and hypertension"
-#links = get_nature_links(keyword)
-#for idx, (title, url) in enumerate(links[:10]):
-#    print(f"{idx + 1}. **{title}**: {url}")
+def get_biomedcentral_links(keyword):
+    search_url = f"https://www.biomedcentral.com/search?query={keyword.replace(' ', '+')}"
+    response = requests.get(search_url)
+    time.sleep(3)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    links = []
+    for a in soup.find_all('a', href=True):
+        title = a.get_text().strip()
+        url = a['href']
+        if ('/articles/' in url) and ('/supplements/' not in url) and ('Full Text' not in title):
+            full_url = f"https:{url}"
+            links.append([title, full_url])
+    return links
+
+
+def get_microbiologyresearch_links(keyword):
+    search_url = f"https://www.microbiologyresearch.org/search?value1={keyword.replace(' ', '+')}&option1=fulltext"
+    response = requests.get(search_url)
+    time.sleep(3)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    links = []
+    for a in soup.find_all('a', href=True):
+        title = a.get_text().strip()
+        url = a['href']
+        if ('/content/journal/' in url) and ('read more' not in title.lower()) and (len(title)>15):
+            full_url = f"https://www.microbiologyresearch.org{url}"
+            links.append([title, full_url])
+    return links
+
+
+def get_mdpi_links(keyword):
+    search_url = f"https://www.mdpi.com/search?q={keyword.replace(' ', '+')}"
+    response = requests.get(search_url)
+    time.sleep(3)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    links = []
+    for article in soup.find_all('div', class_='article-item'):
+        a = article.find('a', class_='title-link', href=True)
+        if a:
+            title = a.get_text().strip()
+            url = a['href']
+            if not url.startswith('http'):
+                url = f"https://www.mdpi.com{url}"
+            links.append([title, url])
+    return links
+
+
+def get_cambridge_links(keyword):
+    search_url = f"https://www.cambridge.org/core/journals/epidemiology-and-infection/listing?q={keyword.replace(' ', '+')}"
+    response = requests.get(search_url)
+    time.sleep(3)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    links = []
+    for a in soup.find_all('a', href=True):
+        title = a.get_text().strip()
+        url = a['href']
+        if ('/core/journals/' in url) and ('/article/' in url) and (len(title)>15):
+            full_url = f"https://www.cambridge.org{url}"
+            links.append([title, full_url])
+    return links
+
+
+def get_mixed_links(keyword):
+    links = get_nature_links(keyword)
+    links.extend(get_microbiologyresearch_links(keyword))
+    links.extend(get_mdpi_links(keyword))
+    links.extend(get_biomedcentral_links(keyword))
+    links.extend(get_cambridge_links(keyword))
+    random.shuffle(links)
+    return links
+
