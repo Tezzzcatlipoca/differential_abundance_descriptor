@@ -35,7 +35,7 @@ def query_gemini(question: str, data_file: str = "") -> str:
         response = model.generate_content(question, stream=False)
     time.sleep(WAIT_TIME)
     print(response.text)
-    with open(GOOGLE_LOG_FILE, 'a') as f:
+    with open(GOOGLE_LOG_FILE, 'a', encoding='utf-8') as f:
         f.write(str(datetime.datetime.now())+'\n')
         f.write(str(response)+'\n\n')
     return response.text
