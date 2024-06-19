@@ -5,7 +5,8 @@ from gemini import query_gemini
 #from olmo import query_olmo
 
 GENERATING_PROMPT = "You are a microbiologist. Write a scientific report based on the following research objectives, together with the findings of the differential abundance analysis table attached. Provide recent references with real DOI, including authors and titles. \n"
-EVALUATION_PROMPT = """Below are two academic texts. Each one was drafted by a different author. The first author may have had access to more complete data than the second one but both authors had access to some of the same data. Evaluate if the second text is compatible with any findings or conclusions of the first text. Only answer True or False, as in the example below: 
+SINGLE_EVALUATION_PROMPT = """Below is an academic text and you are an expert microbiologist. Review the article and provide an expert opinion regarding the following: \n 1. General quality of the paper. \n 2. Text coherence. \n 3. Formal elements. \n 4. Originality and usefulness of any findings. \n\n Academic Text: \n"""
+PAIR_EVALUATION_PROMPT = """Below are two academic texts. Each one was drafted by a different author. The first author may have had access to more complete data than the second one but both authors had access to some of the same data. Evaluate if the second text is compatible with any findings or conclusions of the first text. Only answer True or False, as in the example below: 
 PRIMARY TEXT:
 Patients suffering from cancer, heart failure, renal failure, smoking, stroke, peripheral artery disease, and chronic inflammatory disease were all excluded.
 ----------------
@@ -81,9 +82,24 @@ def save_output(this_answer, file_name):
         f.write(this_answer.choices[0].message.content)
 
 
+def evaluate_text(generated_text:str, evaluator:'openai') -> str:
+    assert evaluator.lower() in ['gemini', 'openai', 'olmo'], "Available evaluator options are gemini, openai, olmo!"
+    complete_prompt = SINGLE_EVALUATION_PROMPT + generated_text
+    if evaluator.lower() == 'gemini':
+        response = query_gemini(complete_prompt)
+    elif evaluator.lower() == 'openai':
+        response = query_openai(complete_prompt)
+    elif evaluator.lower() == 'olmo':
+        #response = query_olmo(complete_prompt)
+        print("OLMo coming soon")
+    else:
+        assert False, f"Evaluation model {evaluator} not available."
+    return response
+
+
 def evaluate_text_pair(original_text: str, generated_text: str, evaluator='gemini') -> bool:
     assert evaluator.lower() in ['gemini', 'openai', 'olmo'], "Available evaluator options are gemini, openai, olmo!"
-    complete_prompt = f"""{EVALUATION_PROMPT}
+    complete_prompt = f"""{PAIR_EVALUATION_PROMPT}
     PRIMARY TEXT: 
     {original_text}
     ----------------
