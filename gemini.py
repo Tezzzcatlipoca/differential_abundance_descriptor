@@ -8,6 +8,7 @@ import datetime
 # Allowed rate: 60 requests per minute (Min Wait time == 1)
 WAIT_TIME = 5
 GOOGLE_LOG_FILE = 'google_log.txt'
+MAX_TOKENS = 2500
 
 
 def convert_file_to_json(txt_file_path: str) -> str:
@@ -23,11 +24,15 @@ def convert_file_to_json(txt_file_path: str) -> str:
     return str(json_data)
 
 
-def query_gemini(question: str, data_file: str = "") -> str:
+def query_gemini(question: str, data_file: str = "", tmax_tokens=MAX_TOKENS) -> str:
     assert question != "", "Empty question to the model!"
     gm_api_key = os.environ['GOOGLE_API_KEY']
     genai.configure(api_key=gm_api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-1.5-flash', generation_config=genai.types.GenerationConfig(
+        # Only one candidate for now.
+        candidate_count=1,
+        max_output_tokens=tmax_tokens,
+        temperature=1.0))
     if data_file != "":
         table = convert_file_to_json(data_file)
         response = model.generate_content(f"{question}\n\n{table}", stream=False)
