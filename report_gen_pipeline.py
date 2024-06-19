@@ -17,11 +17,14 @@ DOCUMENT_INSPECTION_PROMPT = f''
 TABLES_FIRST_COLUMN = "Article_Title"
 WORKING_PATH = "C:\\Users\\Tezzz\\Documents\\Estudios\\Z -MSc Data Science\\999 - DISSERTATION\\LLM_generators2"
 URLS_COLUMN = "URL"
+INOCULUM_INSPECTION_PROMPT = "Using your browsing tool, check if the below URL exists, and if so, return the title of the academic paper under the URL. If the URL is not valid or returns no scientific paper, then return 'Not a paper'. Respond following this format: \n User: http://www.non-existent-paper.com/ \n Model: Not a paper \n User: https://www.nature.com/articles/35079176 \n Model: Natural selection and resistance to HIV \n\n --------------------- \n URL:"
 INSPECTION_PROMPT = "From the below URL, extract the following information: \n 1. If it contains Supplementary Information (Yes/No) \n 2. If it contains information on species names (Yes/No) \n 3. If it contains phylogeny (Yes/No) \n 4. If it contains gene names (Yes/No) \n 5. If it contains experimental information on %condition% and control groups (Yes/No) \n These elements can be extracted from the text of the paper or from any Supplementary Data provided with the paper. \n URL: %URL%"
 DOI_PROMPT = "From the below URL, extract the DOI. If no DOI is found in the page, return NA. \n Use the following format for your output: \n 10.1038/s41598-018-27682-w \n \n URL: "
 SUMMARIZING_PROMPT = "You are an expert microbiologist. Use your browser tool to read the document available under de below URL and using only the information available in the paper (or in its Additional or Supplementary Information), and not in your previous training, create a table about the most outstanding bacteria species that are mentioned in the paper. The table should also contain any information provided about the phylogeny, gene names (and whether they are overexpressed or under-expressed), their gene functions (using GO), biochemical pathways and health status. The table should contain the following columns: species_name, phylogeny, gene_name, expression_status, gene_function, biochemical_pathway, health_status, disease_name. If any of the referred pieces of information are not available in the paper or its supplementary data, mark the observation as NA. The table should follow this format example: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension \n\n URL: "
 CONSOLIDATING_PROMPT = "Below are %num% table summaries from different microbiology papers about %condition%. You are an expert microbiologist and your task is to consolidate the results from the below tables into a single one, making sure to capture the most important elements. Follow this sample format: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name|DOI\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension|10.1234/a123-456 \n\n Table summaries: "
-DRAFTING_PROMPT = "You are an expert microbiologist. Take the below table as the basis to draft an academic paper with all of its formal elements. Table \n %table% \n\n The table summarizes the findings from the below list of papers about %condition%. Make sure to cite them in the report. \n List of papers: \n %papers%"
+DRAFTING_PROMPT = "You are an expert microbiologist. Take the below table as the basis to draft an academic paper about the microbiome of %condition% with all of its formal elements. Table \n %table% \n\n The table summarizes the findings from the below list of papers about %condition%. Make sure to cite them in the report. \n List of papers: \n %papers%"
+FORMATTING_SUMMARY_PROMPT = "Review the requirements for publishing a paper contained in the below URL and create a concise summary of them. \n URL: "
+FINETUNING_PROMPT = "From the "
 MODEL = "openai"
 OUTPUT_REPORT_NAME = "drafted_article.txt"
 GENERAL_MAX_TOKENS = 2500
@@ -30,7 +33,7 @@ GENERAL_MAX_TOKENS = 2500
 def ask_question(this_question: str, data_file: str = "", model='openai', tmax_tokens:int=GENERAL_MAX_TOKENS) -> str:
     assert model.lower() in ['gemini', 'openai', 'olmo'], "Available evaluator options are gemini, openai, olmo!"
     if model.lower() == 'gemini':
-        response = query_gemini(this_question, data_file)
+        response = query_gemini(this_question, data_file, tmax_tokens=tmax_tokens)
     elif model.lower() == 'openai':
         response = query_openai(this_question, data_file, tmax_tokens=tmax_tokens)
     elif model.lower() == 'olmo':
@@ -72,7 +75,16 @@ def ask_parameters() -> dict:
     root.withdraw()
     condition = simpledialog.askstring("Input Condition", "Enter the health condition to search for:")
     paper_count = simpledialog.askinteger("Input", "Enter the number of papers to review:")
-    return {'%condition%': [condition], '%num%': [paper_count]}
+    inoculum_paper = simpledialog.askstring("Inoculum paper", "Enter the URL to any paper that needs to be ingested:")
+    return {'%condition%': [condition], '%num%': [paper_count], '%inoculum%': [inoculum_paper]}
+
+
+def extract_inoculum_details(url: str) -> list:
+    new_prompt = INOCULUM_INSPECTION_PROMPT + url
+    title = ask_question(new_prompt, model=MODEL)
+    doi = extract_page_doi(url)
+    assert 'not a paper' not in title.lower(), "URL to the Inoculum Paper does not return a valid paper!"
+    return [title, url, doi]
 
 
 def update_prompt(parameters: dict, this_prompt: str) -> str:
@@ -194,30 +206,38 @@ def consolidate_tables(document_summaries:list) -> str:
     return consolidation
 
 
-def draft_article(consolidated_table:str, condition:str, papers:list) -> str:
+def draft_article(consolidated_table:str, condition:str, papers:list, model="openai") -> str:
     new_prompt = DRAFTING_PROMPT.replace('%table%', consolidated_table) # table, condition, papers
     new_prompt = new_prompt.replace('%condition%', condition)
     new_prompt = new_prompt.replace('%papers%', "\t".join([x[0] + " - " + x[1] + " : " + x[2] for x in papers]))
-    article = ask_question(new_prompt, tmax_tokens=10000)
+    article = ask_question(new_prompt, tmax_tokens=10000, model=model)
     return article
+
+
+def summarize_publication_requirements(magazine_url:str):
+    new_prompt = FORMATTING_SUMMARY_PROMPT + magazine_url
+    requirements = ask_question(new_prompt)
+    return requirements
 
 
 def generate_report(model="openai"):
     # Find relevant literature
     user_parameters = ask_parameters()
-    docs_list = get_mixed_links("microbiome and " + user_parameters['%condition%'][0])
+    inoculum_details = extract_inoculum_details(user_parameters['%inoculum%'][0])
+    # Verify that the Journal exists!
+    docs_list = get_mixed_links(user_parameters['%condition%'][0])
     # Add other media besides Nature, then re-order them randomly
 
     # Inspect each page, check for elements.
     # This step can be done outside of a paid LLM, to reduce costs when
     # analysing hundreds of papers for suitability, using a spaCy?
     acceptable_docs = find_n_acceptable(docs_list, user_parameters['%num%'][0], user_parameters['%condition%'][0])
-
+    acceptable_docs.append(inoculum_details)
     document_summaries = extract_document_summaries(acceptable_docs, "openai")
     consolidated_table = consolidate_tables(document_summaries)
 
     # Summarize and draft report
-    article = draft_article(consolidated_table, user_parameters['%condition%'][0], acceptable_docs)
+    article = draft_article(consolidated_table, user_parameters['%condition%'][0], acceptable_docs, 'openai')
     with open(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME), 'w') as report:
         report.write(article)
 
