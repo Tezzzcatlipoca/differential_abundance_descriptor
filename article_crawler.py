@@ -16,7 +16,7 @@ def get_nature_links(keyword):
         url = a['href']
         if url.startswith('/articles/') and keyword.lower() in title.lower():
             full_url = f"https://www.nature.com{url}"
-            links.append([title, full_url])
+            links.append(list([title, full_url]))
     return links
 
 
@@ -30,7 +30,7 @@ def get_biomedcentral_links(keyword):
     for a in soup.find_all('a', href=True):
         title = a.get_text().strip()
         url = a['href']
-        if ('/articles/' in url) and ('/supplements/' not in url) and ('Full Text' not in title) and keyword.lower() in title.lower():
+        if ('/articles/' in url) and ('/supplements/' not in url) and ('Full Text' not in title) and (keyword.lower() in title.lower()):
             full_url = f"https:{url}"
             links.append([title, full_url])
     return links
@@ -46,7 +46,7 @@ def get_microbiologyresearch_links(keyword):
     for a in soup.find_all('a', href=True):
         title = a.get_text().strip()
         url = a['href']
-        if ('/content/journal/' in url) and ('read more' not in title.lower()) and (len(title)>15) and keyword.lower() in title.lower():
+        if ('/content/journal/' in url) and ('read more' not in title.lower()) and (len(title)>15) and (keyword.lower() in title.lower()):
             full_url = f"https://www.microbiologyresearch.org{url}"
             links.append([title, full_url])
     return links
@@ -64,9 +64,9 @@ def get_mdpi_links(keyword):
         if a:
             title = a.get_text().strip()
             url = a['href']
-            if not url.startswith('http') and keyword.lower() in title.lower():
-                url = f"https://www.mdpi.com{url}"
-            links.append([title, url])
+            if (not url.startswith('http')) and (keyword.lower() in title.lower()):
+                full_url = f"https://www.mdpi.com{url}"
+                links.append([title, full_url])
     return links
 
 
@@ -80,7 +80,7 @@ def get_cambridge_links(keyword):
     for a in soup.find_all('a', href=True):
         title = a.get_text().strip()
         url = a['href']
-        if ('/core/journals/' in url) and ('/article/' in url) and (len(title)>15) and keyword.lower() in title.lower():
+        if ('/core/journals/' in url) and ('/article/' in url) and (len(title)>15) and (keyword.lower() in title.lower()):
             full_url = f"https://www.cambridge.org{url}"
             links.append([title, full_url])
     return links

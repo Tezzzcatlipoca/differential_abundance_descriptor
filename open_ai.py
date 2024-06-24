@@ -26,9 +26,9 @@ def convert_file_to_json(txt_file_path: str) -> str:
     return str(json_data)
 
 
-def query_openai(question: str, data_file: str = '', tmax_tokens=MAX_TOKENS):
+def query_openai(question: str, data_file: str = '', tmax_tokens=MAX_TOKENS, temperature=0.3):
     assert question != "", "Empty question to the model!"
-    if tmax_tokens > 4096:
+    if tmax_tokens > 14096:
         print("Model's max number of tokens is 4096! Truncating")
         tmax_tokens = 4096
     api_key = os.environ['OPENAI_DISSERTATION_KEY']
@@ -44,9 +44,11 @@ def query_openai(question: str, data_file: str = '', tmax_tokens=MAX_TOKENS):
                 "role": "user", "content": prompt
             }
         ],
-        model="gpt-3.5-turbo-0125",
-        #model="gpt-4o",
-        max_tokens=tmax_tokens
+        #model="gpt-3.5-turbo-0125",
+        model="gpt-4",
+        #model="gpt-4-32k",
+        max_tokens=tmax_tokens,
+        temperature=temperature
     )
     time.sleep(AI_WAIT_TIME)
     print(chat_completion.choices[0].message.content)

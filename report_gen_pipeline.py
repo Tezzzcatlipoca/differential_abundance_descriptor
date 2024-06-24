@@ -17,14 +17,24 @@ DOCUMENT_INSPECTION_PROMPT = f''
 TABLES_FIRST_COLUMN = "Article_Title"
 WORKING_PATH = "C:\\Users\\Tezzz\\Documents\\Estudios\\Z -MSc Data Science\\999 - DISSERTATION\\LLM_generators2"
 URLS_COLUMN = "URL"
-INOCULUM_INSPECTION_PROMPT = "Using your browsing tool, check if the below URL exists, and if so, return the title of the academic paper under the URL. If the URL is not valid or returns no scientific paper, then return 'Not a paper'. Respond following this format: \n User: http://www.non-existent-paper.com/ \n Model: Not a paper \n User: https://www.nature.com/articles/35079176 \n Model: Natural selection and resistance to HIV \n\n --------------------- \n URL:"
+INOCULUM_INSPECTION_PROMPT = "Provide an APA citation of the paper under the following URL: "
 INSPECTION_PROMPT = "From the below URL, extract the following information: \n 1. If it contains Supplementary Information (Yes/No) \n 2. If it contains information on species names (Yes/No) \n 3. If it contains phylogeny (Yes/No) \n 4. If it contains gene names (Yes/No) \n 5. If it contains experimental information on %condition% and control groups (Yes/No) \n These elements can be extracted from the text of the paper or from any Supplementary Data provided with the paper. \n URL: %URL%"
 DOI_PROMPT = "From the below URL, extract the DOI. If no DOI is found in the page, return NA. \n Use the following format for your output: \n 10.1038/s41598-018-27682-w \n \n URL: "
 SUMMARIZING_PROMPT = "You are an expert microbiologist. Use your browser tool to read the document available under de below URL and using only the information available in the paper (or in its Additional or Supplementary Information), and not in your previous training, create a table about the most outstanding bacteria species that are mentioned in the paper. The table should also contain any information provided about the phylogeny, gene names (and whether they are overexpressed or under-expressed), their gene functions (using GO), biochemical pathways and health status. The table should contain the following columns: species_name, phylogeny, gene_name, expression_status, gene_function, biochemical_pathway, health_status, disease_name. If any of the referred pieces of information are not available in the paper or its supplementary data, mark the observation as NA. The table should follow this format example: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension \n\n URL: "
 CONSOLIDATING_PROMPT = "Below are %num% table summaries from different microbiology papers about %condition%. You are an expert microbiologist and your task is to consolidate the results from the below tables into a single one, making sure to capture the most important elements. Follow this sample format: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name|DOI\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension|10.1234/a123-456 \n\n Table summaries: "
 DRAFTING_PROMPT = "You are an expert microbiologist. Take the below table as the basis to draft an academic paper about the microbiome of %condition% with all of its formal elements. Table \n %table% \n\n The table summarizes the findings from the below list of papers about %condition%. Make sure to cite them in the report. \n List of papers: \n %papers%"
 FORMATTING_SUMMARY_PROMPT = "Review the requirements for publishing a paper contained in the below URL and create a concise summary of them. \n URL: "
-FINETUNING_PROMPT = "From the "
+FINETUNING_PROMPT = ""
+ABSTRACT_DRAFTING_PROMPT = "You are an expert microbiologist. Compare the data in the below table (about the microbiome of %condition%) against the provided research paper summary and draft the abstract of a research paper review. \n Table \n %consolidated_table% \n The above table summarizes the findings from a list of related research papers. \n Summary of research paper: \n %inoculum_summary%"
+INTRO_DRAFTING_PROMPT = "You are an expert microbiologist. Take the below abstract summary and draft an introduction chapter to it. Whenever relevant, provide real bibliographic references along the text. While drafting, stick to the below style guide \n Abstract Summary\n %abstract_summary% \n Style guide \n %style_summary%"
+REVIEW_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create a review of a research paper. Take the below abstract summary and data table and draft a review based in both. Draft only the main body of the review and omit the review’s Introduction, Discussion or Conclusions parts, as these will be drafted by someone else. \n Abstract Summary \n %abstract_summary% \n Data Table \n %consolidated_table% \n Style guide \n %style_summary%"
+DISCUSSION_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create the ‘Discussion’ section of a research paper review. Take the below summary of the main body of the review and draft the Discussion section based in it. Draft only the Discussion section of the review and omit the review’s Introduction, Main Body or Conclusions parts, as these will be drafted by someone else. \n Summary of Research Paper Review: \n %review_summary%"
+CONCLUSIONS_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create the ‘Conclusions’ section of a research paper review. Take the below summary of the main body of the review and draft the Conclusions section based in it. Draft only the Conclusions section of the review and omit the review’s Introduction, Main Body or Discussions parts, as these will be drafted by someone else. \n Summary of Research Paper Review: \n %review_summary%"
+SUMMARY_PROMPT = "Provide a very concise summary of the provided text: "
+ELABORATE_PROMPT = "Elaborate further on the below review summary: "
+
+
+
 MODEL = "openai"
 OUTPUT_REPORT_NAME = "drafted_article.txt"
 GENERAL_MAX_TOKENS = 2500
@@ -76,12 +86,13 @@ def ask_parameters() -> dict:
     condition = simpledialog.askstring("Input Condition", "Enter the health condition to search for:")
     paper_count = simpledialog.askinteger("Input", "Enter the number of papers to review:")
     inoculum_paper = simpledialog.askstring("Inoculum paper", "Enter the URL to any paper that needs to be ingested:")
-    return {'%condition%': [condition], '%num%': [paper_count], '%inoculum%': [inoculum_paper]}
+    style_guide = simpledialog.askstring("Style guide source", "Enter a URL to the Style Guide:")
+    return {'%condition%': condition, '%num%': paper_count, '%inoculum%': inoculum_paper, '%style_guide%': style_guide}
 
 
-def extract_inoculum_details(url: str) -> list:
+def extract_inoculum_details(url: str, model=MODEL) -> list:
     new_prompt = INOCULUM_INSPECTION_PROMPT + url
-    title = ask_question(new_prompt, model=MODEL)
+    title = ask_question(new_prompt, model=model)
     doi = extract_page_doi(url)
     assert 'not a paper' not in title.lower(), "URL to the Inoculum Paper does not return a valid paper!"
     return [title, url, doi]
@@ -101,14 +112,14 @@ def log_response(model_output):
     print("Log saved...")
 
 
-def inspect_paper_elements(this_URL:str, condition:str) -> list:
+def inspect_paper_elements(this_URL: str, condition: str) -> str:
     new_prompt = INSPECTION_PROMPT.replace('%condition%', condition)
     new_prompt = new_prompt.replace('%URL%', this_URL)
     extracted_info = ask_question(new_prompt, model=MODEL)
     return extracted_info
 
 
-def extract_text_doi(text:str) -> str:
+def extract_text_doi(text: str) -> str:
     doi_pattern = r'\b10\.\d{4,9}/[-._;()/:A-Z0-9]+\b'
     matches = re.findall(doi_pattern, text, re.IGNORECASE)
     if len(matches) == 0:
@@ -118,14 +129,14 @@ def extract_text_doi(text:str) -> str:
     return output
 
 
-def extract_page_doi(this_URL:str) -> str:
+def extract_page_doi(this_URL: str) -> str:
     new_prompt = DOI_PROMPT + " " + this_URL
     findings = ask_question(new_prompt, model=MODEL)
     output = extract_text_doi(findings)
     return output
 
 
-def find_n_acceptable(all_docs:list, n:int, condition:str) -> list:
+def find_n_acceptable(all_docs: list, n: int, condition: str) -> list:
     # For each document, this function evaluates the number of positive
     # findings from the list of necessary requirements and adds to the final
     # list any document that has enough findings.
@@ -144,20 +155,20 @@ def find_n_acceptable(all_docs:list, n:int, condition:str) -> list:
     return acceptable
 
 
-def summarise_document(this_URL:str, model="openai") -> str:
+def summarise_document(this_URL: str, model="openai") -> str:
     new_prompt = SUMMARIZING_PROMPT + " " + this_URL
     summary = ask_question(new_prompt, model=model)
     return summary
 
 
-def append_dois(text_table:str, doi:str):
-    def _padd_this(doi:str, first_line:str):
+def append_dois(text_table: str, doi: str):
+    def _padd_this(doi: str, first_line: str):
         any_spaces = first_line.count(' ') > 0
         doi_length = len(doi)
         return " "*((doi_length-len('|doi'))*any_spaces)
 
-    def _aesthetic_line(this_line:str) -> bool:
-        if len(this_line)==0:
+    def _aesthetic_line(this_line: str) -> bool:
+        if len(this_line) == 0:
             output = False
         else:
             output = this_line.count('-')/len(this_line) > .5
@@ -190,7 +201,7 @@ def append_dois(text_table:str, doi:str):
     return new_table[1:]
 
 
-def extract_document_summaries(all_docs:list, model="openai"):
+def extract_document_summaries(all_docs: list, model="openai"):
     extracts = []
     for each_paper in all_docs:
         print(f"Summarising {each_paper[0]}...")
@@ -200,46 +211,95 @@ def extract_document_summaries(all_docs:list, model="openai"):
     return extracts
 
 
-def consolidate_tables(document_summaries:list) -> str:
+def consolidate_tables(document_summaries: list) -> str:
     new_prompt = CONSOLIDATING_PROMPT + "\n".join(document_summaries)
     consolidation = ask_question(new_prompt)
     return consolidation
 
 
-def draft_article(consolidated_table:str, condition:str, papers:list, model="openai") -> str:
+def draft_article(consolidated_table:str, condition:str, papers:list, model="openai", tmax_tokens=10000) -> str:
     new_prompt = DRAFTING_PROMPT.replace('%table%', consolidated_table) # table, condition, papers
     new_prompt = new_prompt.replace('%condition%', condition)
     new_prompt = new_prompt.replace('%papers%', "\t".join([x[0] + " - " + x[1] + " : " + x[2] for x in papers]))
-    article = ask_question(new_prompt, tmax_tokens=10000, model=model)
+    article = ask_question(new_prompt, tmax_tokens=tmax_tokens, model=model)
     return article
 
 
-def summarize_publication_requirements(magazine_url:str):
+def summarize_publication_requirements(magazine_url: str):
     new_prompt = FORMATTING_SUMMARY_PROMPT + magazine_url
     requirements = ask_question(new_prompt)
     return requirements
 
 
+def draft_abstract(consolidated_table: str, condition: str, inoculum_summary: str) -> str:
+    new_prompt = ABSTRACT_DRAFTING_PROMPT.replace('%table%', consolidated_table)
+    new_prompt = new_prompt.replace('%condition%', condition)
+    new_prompt = new_prompt + inoculum_summary
+    abstract = ask_question(new_prompt)
+    return abstract
+
+
+def draft_intro(abstract_summary: str, style_guide: str) -> str:
+    new_prompt = INTRO_DRAFTING_PROMPT.replace('%abstract_summary%', abstract_summary)
+    new_prompt = new_prompt.replace('%style_guide%', style_guide)
+    intro = ask_question(new_prompt)
+    return intro
+
+
+#def draft_review_body(abstract_summary:str, consolidated_table:str, style_guide:str) -> str:
+#    new_summary = REVIEW_DRAFTING_PROMPT.replace('%abstract_summary%', abstract_summary)
+
+
+def draft_this(my_prompt: str, my_kwargs: dict, new_element_name: str, tokens=GENERAL_MAX_TOKENS, model='openai') -> dict:
+    keywords = re.findall(r'%\w+%', my_prompt)
+    new_prompt = my_prompt
+    for each_keyword in keywords:
+        new_prompt = new_prompt.replace(each_keyword, my_kwargs[each_keyword])
+    new_element = ask_question(new_prompt, tmax_tokens=tokens, model=model)
+    my_kwargs[new_element_name] = new_element
+    return my_kwargs
+
+
+def stitch(my_kwargs: dict, elements: list) -> str:
+    full_text = ""
+    for each_element in elements:
+        full_text = full_text + my_kwargs[each_element]
+    return full_text
+
+
 def generate_report(model="openai"):
     # Find relevant literature
-    user_parameters = ask_parameters()
-    inoculum_details = extract_inoculum_details(user_parameters['%inoculum%'][0])
+    paper_elements = ask_parameters()
+    paper_elements['%inoculum_details%'] = extract_inoculum_details(paper_elements['%inoculum%'], model='gemini')
     # Verify that the Journal exists!
-    docs_list = get_mixed_links(user_parameters['%condition%'][0])
+    paper_elements['%docs_list%'] = get_mixed_links(paper_elements['%condition%'])
     # Add other media besides Nature, then re-order them randomly
 
     # Inspect each page, check for elements.
     # This step can be done outside of a paid LLM, to reduce costs when
     # analysing hundreds of papers for suitability, using a spaCy?
-    acceptable_docs = find_n_acceptable(docs_list, user_parameters['%num%'][0], user_parameters['%condition%'][0])
-    acceptable_docs.append(inoculum_details)
-    document_summaries = extract_document_summaries(acceptable_docs, "openai")
-    consolidated_table = consolidate_tables(document_summaries)
+    paper_elements['%acceptable_docs%'] = find_n_acceptable(paper_elements['%docs_list%'], paper_elements['%num%'], paper_elements['%condition%'])
+    paper_elements['%acceptable_docs%'].append(paper_elements['%inoculum_details%'])
+    paper_elements['%document_summaries%'] = extract_document_summaries(paper_elements['%acceptable_docs%'], "openai")
+    paper_elements['%consolidated_table%'] = consolidate_tables(paper_elements['%document_summaries%'])
 
     # Summarize and draft report
-    article = draft_article(consolidated_table, user_parameters['%condition%'][0], acceptable_docs, 'openai')
+    #article = draft_article(consolidated_table, user_parameters['%condition%'][0], acceptable_docs, 'openai')
+    url = 1
+    paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%inoculum_details%'][url], paper_elements, '%inoculum_summary%', model='gemini')
+    paper_elements = draft_this(ABSTRACT_DRAFTING_PROMPT, paper_elements, '%abstract%', model='gemini')
+    paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%abstract%'], paper_elements, '%abstract_summary%', model='gemini')
+    paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%style_guide%'], paper_elements, '%style_summary%', model='gemini')
+    paper_elements = draft_this(INTRO_DRAFTING_PROMPT, paper_elements, '%introduction%', model='gemini')
+    paper_elements = draft_this(REVIEW_DRAFTING_PROMPT, paper_elements, '%review%', tokens=7000, model='gemini')
+    paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%review%'], paper_elements, '%review_summary%', tokens=7000, model='gemini')
+    paper_elements = draft_this(DISCUSSION_DRAFTING_PROMPT, paper_elements, '%discussion%', tokens=7000, model='gemini')
+    paper_elements = draft_this(CONCLUSIONS_DRAFTING_PROMPT, paper_elements, '%conclusions%', model='gemini')
+    paper_elements = draft_this(ELABORATE_PROMPT + paper_elements['%review_summary%'], paper_elements, '%further_review%', tokens=7000, model='gemini')
+    full_text = stitch(paper_elements, ['%abstract%', '%introduction%', '%review%', '%discussion%', '%conclusions%', '%further_review%'])
+
     with open(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME), 'w') as report:
-        report.write(article)
+        report.write(full_text)
 
 
 if __name__ == "__main__":
