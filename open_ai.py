@@ -4,13 +4,7 @@ import os
 import time
 import datetime
 import json
-
-OPENAI_LOG_FILE = 'openai_log.txt'
-DATA_FILE = "differential_genera_input.txt"
-ABSTRACT = "Recently, the potential role of gut microbiome in metabolic diseases has been revealed, especially in cardiovascular diseases. Hypertension is one of the most prevalent cardiovascular diseases worldwide, yet whether gut microbiota dysbiosis participates in the development of hypertension remains largely unknown. To investigate this issue, we carried out comprehensive metagenomic and metabolomic analyses in a cohort of 41 healthy controls, 56 subjects with pre-hypertension, 99 individuals with primary hypertension, and performed fecal microbiota transplantation from patients to germ-free mice."
-OUTPUT_FILE = "output.txt"
-AI_WAIT_TIME = 5
-MAX_TOKENS = 2500
+from CONSTANTS import *
 
 
 def convert_file_to_json(txt_file_path: str) -> str:

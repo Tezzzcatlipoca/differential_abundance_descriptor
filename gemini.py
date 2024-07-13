@@ -4,11 +4,9 @@ import json
 import google.generativeai as genai
 import time
 import datetime
+from CONSTANTS import *
 
 # Allowed rate: 60 requests per minute (Min Wait time == 1)
-WAIT_TIME = 5
-GOOGLE_LOG_FILE = 'google_log.txt'
-MAX_TOKENS = 2500
 
 
 def convert_file_to_json(txt_file_path: str) -> str:
