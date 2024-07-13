@@ -4,6 +4,7 @@ import pandas as pd
 from open_ai import query_openai
 from gemini import query_gemini
 from article_crawler import *
+from evaluate_run_pipeline import *
 import requests
 import time
 import datetime
@@ -20,7 +21,7 @@ URLS_COLUMN = "URL"
 INOCULUM_INSPECTION_PROMPT = "Provide an APA citation of the paper under the following URL: "
 INSPECTION_PROMPT = "From the below URL, extract the following information: \n 1. If it contains Supplementary Information (Yes/No) \n 2. If it contains information on species names (Yes/No) \n 3. If it contains phylogeny (Yes/No) \n 4. If it contains gene names (Yes/No) \n 5. If it contains experimental information on %condition% and control groups (Yes/No) \n These elements can be extracted from the text of the paper or from any Supplementary Data provided with the paper. \n URL: %URL%"
 DOI_PROMPT = "From the below URL, extract the DOI. If no DOI is found in the page, return NA. \n Use the following format for your output: \n 10.1038/s41598-018-27682-w \n \n URL: "
-SUMMARIZING_PROMPT = "You are an expert microbiologist. Use your browser tool to read the document available under de below URL and using only the information available in the paper (or in its Additional or Supplementary Information), and not in your previous training, create a table about the most outstanding bacteria species that are mentioned in the paper. The table should also contain any information provided about the phylogeny, gene names (and whether they are overexpressed or under-expressed), their gene functions (using GO), biochemical pathways and health status. The table should contain the following columns: species_name, phylogeny, gene_name, expression_status, gene_function, biochemical_pathway, health_status, disease_name. If any of the referred pieces of information are not available in the paper or its supplementary data, mark the observation as NA. The table should follow this format example: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension \n\n URL: "
+SUMMARIZING_PROMPT = "Create a table about the most outstanding bacteria species that are mentioned in the paper. The table should also contain any information provided about the phylogeny, gene names (and whether they are overexpressed or under-expressed), their gene functions (using GO), biochemical pathways and health status. The table should contain the following columns: species_name, phylogeny, gene_name, expression_status, gene_function, biochemical_pathway, health_status, disease_name. If any of the referred pieces of information are not available in the paper or its supplementary data, mark the observation as NA. The table should follow this format example: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension \n\n URL: "
 CONSOLIDATING_PROMPT = "Below are %num% table summaries from different microbiology papers about %condition%. You are an expert microbiologist and your task is to consolidate the results from the below tables into a single one, making sure to capture the most important elements. Follow this sample format: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name|DOI\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension|10.1234/a123-456 \n\n Table summaries: "
 DRAFTING_PROMPT = "You are an expert microbiologist. Take the below table as the basis to draft an academic paper about the microbiome of %condition% with all of its formal elements. Table \n %table% \n\n The table summarizes the findings from the below list of papers about %condition%. Make sure to cite them in the report. \n List of papers: \n %papers%"
 FORMATTING_SUMMARY_PROMPT = "Review the requirements for publishing a paper contained in the below URL and create a concise summary of them. \n URL: "
@@ -32,12 +33,12 @@ DISCUSSION_DRAFTING_PROMPT = "You are an expert microbiologist. You were given t
 CONCLUSIONS_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create the ‘Conclusions’ section of a research paper review. Take the below summary of the main body of the review and draft the Conclusions section based in it. Draft only the Conclusions section of the review and omit the review’s Introduction, Main Body or Discussions parts, as these will be drafted by someone else. \n Summary of Research Paper Review: \n %review_summary%"
 SUMMARY_PROMPT = "Provide a very concise summary of the provided text: "
 ELABORATE_PROMPT = "Elaborate further on the below review summary: "
-
-
+EVALUATING = 0
 
 MODEL = "openai"
 OUTPUT_REPORT_NAME = "drafted_article.txt"
 GENERAL_MAX_TOKENS = 2500
+URL_INDEX = 1
 
 
 def ask_question(this_question: str, data_file: str = "", model='openai', tmax_tokens:int=GENERAL_MAX_TOKENS) -> str:
@@ -136,14 +137,25 @@ def extract_page_doi(this_URL: str) -> str:
     return output
 
 
-def find_n_acceptable(all_docs: list, n: int, condition: str) -> list:
+def save_results(full_path:str, message_to_save:str):
+    with open(full_path, 'a', encoding='utf-8') as f:
+        f.write(str(datetime.datetime.now())+'\n')
+        f.write(str(message_to_save)+'\n\n')
+
+
+def find_n_acceptable(all_elements: dict) -> list:
     # For each document, this function evaluates the number of positive
     # findings from the list of necessary requirements and adds to the final
     # list any document that has enough findings.
+    all_docs = all_elements['%docs_list%']
+    condition = all_elements['%condition%']
+    n = all_elements['%num%']
     acceptable = []
+    evaluations = []
     for each_paper in all_docs:
         print(f"Evaluating {each_paper[0]}...")
         elements = inspect_paper_elements(each_paper[1], condition)
+        evaluations.append(elements)
         if elements.count('Yes') >= 5:
             doi = extract_page_doi(each_paper[1])
             each_paper.append(doi)
@@ -152,6 +164,9 @@ def find_n_acceptable(all_docs: list, n: int, condition: str) -> list:
             break
     if acceptable.__len__() < n:
         print(f"Not enough acceptable papers found for {condition}! Only {acceptable.__len__()} found.")
+    if EVALUATING:
+        scores_table = evaluate_article_relevance(evaluations)
+        scores_table.to_csv(EVAL2_PATH, sep="\t", index=False)
     return acceptable
 
 
@@ -246,10 +261,6 @@ def draft_intro(abstract_summary: str, style_guide: str) -> str:
     return intro
 
 
-#def draft_review_body(abstract_summary:str, consolidated_table:str, style_guide:str) -> str:
-#    new_summary = REVIEW_DRAFTING_PROMPT.replace('%abstract_summary%', abstract_summary)
-
-
 def draft_this(my_prompt: str, my_kwargs: dict, new_element_name: str, tokens=GENERAL_MAX_TOKENS, model='openai') -> dict:
     keywords = re.findall(r'%\w+%', my_prompt)
     new_prompt = my_prompt
@@ -271,22 +282,17 @@ def generate_report(model="openai"):
     # Find relevant literature
     paper_elements = ask_parameters()
     paper_elements['%inoculum_details%'] = extract_inoculum_details(paper_elements['%inoculum%'], model='gemini')
-    # Verify that the Journal exists!
     paper_elements['%docs_list%'] = get_mixed_links(paper_elements['%condition%'])
-    # Add other media besides Nature, then re-order them randomly
 
-    # Inspect each page, check for elements.
-    # This step can be done outside of a paid LLM, to reduce costs when
-    # analysing hundreds of papers for suitability, using a spaCy?
-    paper_elements['%acceptable_docs%'] = find_n_acceptable(paper_elements['%docs_list%'], paper_elements['%num%'], paper_elements['%condition%'])
+    # Use spaCy instead?
+    paper_elements['%acceptable_docs%'] = find_n_acceptable(paper_elements)
     paper_elements['%acceptable_docs%'].append(paper_elements['%inoculum_details%'])
     paper_elements['%document_summaries%'] = extract_document_summaries(paper_elements['%acceptable_docs%'], "openai")
     paper_elements['%consolidated_table%'] = consolidate_tables(paper_elements['%document_summaries%'])
 
     # Summarize and draft report
-    #article = draft_article(consolidated_table, user_parameters['%condition%'][0], acceptable_docs, 'openai')
-    url = 1
-    paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%inoculum_details%'][url], paper_elements, '%inoculum_summary%', model='gemini')
+    # article = draft_article(consolidated_table, user_parameters['%condition%'][0], acceptable_docs, 'openai')
+    paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%inoculum_details%'][URL_INDEX], paper_elements, '%inoculum_summary%', model='gemini')
     paper_elements = draft_this(ABSTRACT_DRAFTING_PROMPT, paper_elements, '%abstract%', model='gemini')
     paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%abstract%'], paper_elements, '%abstract_summary%', model='gemini')
     paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%style_guide%'], paper_elements, '%style_summary%', model='gemini')

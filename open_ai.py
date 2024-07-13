@@ -44,8 +44,8 @@ def query_openai(question: str, data_file: str = '', tmax_tokens=MAX_TOKENS, tem
                 "role": "user", "content": prompt
             }
         ],
-        #model="gpt-3.5-turbo-0125",
-        model="gpt-4",
+        model="gpt-3.5-turbo-0125",
+        #model="gpt-4",
         #model="gpt-4-32k",
         max_tokens=tmax_tokens,
         temperature=temperature
