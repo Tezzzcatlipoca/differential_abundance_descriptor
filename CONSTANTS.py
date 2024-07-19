@@ -1,3 +1,36 @@
+# MAIN
+JOURNALS_SOURCE = "nature.com"
+DATASET_GENERATING_PROMPT = f'Use your browser tool to find in {JOURNALS_SOURCE} %num% recent papers about microbiome and %condition%. From each paper, extract its citation information under "Cite this Article" as well as its DOI (only if available), and using only the information included in the papers (and not in your previous training) create a table containing citation information, DOI and paper URLs (both in plain text format, not clickable links) for each one of the %num% papers, and a flag of whether or not the given paper is related with %condition% and contains data of interest (which we will define as information about bacteria species names, phylogeny, gene names and experimental information). The above table should be in a pipe-delimited format with the following columns: Article_Title, Citation_Information, DOI, URL, data_of_interest. The data_of_interest column will be boolean. Each row should refer to an article. Do not include a preamble or introductory paragraph before the table. Only return the tab-separated table.'
+DOCUMENT_INSPECTION_PROMPT = f''
+TABLES_FIRST_COLUMN = "Article_Title"
+LOGS_PATH = "logs/"
+WORKING_PATH = "output/"
+URLS_COLUMN = "URL"
+INOCULUM_INSPECTION_PROMPT = "Provide an APA citation of the paper under the following URL: "
+INSPECTION_PROMPT = "From the below URL, extract the following information: \n 1. If it contains Supplementary Information (Yes/No) \n 2. If it contains information on species names (Yes/No) \n 3. If it contains phylogeny (Yes/No) \n 4. If it contains gene names (Yes/No) \n 5. If it contains experimental information on %condition% and control groups (Yes/No) \n These elements can be extracted from the text of the paper or from any Supplementary Data provided with the paper. \n URL: %URL%"
+DOI_PROMPT = "From the below URL, extract the DOI. If no DOI is found in the page, return NA. \n Use the following format for your output: \n 10.1038/s41598-018-27682-w \n \n URL: "
+SUMMARIZING_PROMPT = "Create a table about the most outstanding bacteria species that are mentioned in the paper. The table should also contain any information provided about the phylogeny, gene names (and whether they are overexpressed or under-expressed), their gene functions (using GO), biochemical pathways and health status. The table should contain the following columns: species_name, phylogeny, gene_name, expression_status, gene_function, biochemical_pathway, health_status, disease_name. If any of the referred pieces of information are not available in the paper or its supplementary data, mark the observation as NA. The table should follow this format example: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension \n\n URL: "
+CONSOLIDATING_PROMPT = "Below are %num% table summaries from different microbiology papers about %condition%. You are an expert microbiologist and your task is to consolidate the results from the below tables into a single one, making sure to capture the most important elements. Follow this sample format: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name|DOI\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension|10.1234/a123-456 \n\n Table summaries: "
+DRAFTING_PROMPT = "You are an expert microbiologist. Take the below table as the basis to draft an academic paper about the microbiome of %condition% with all of its formal elements. Table \n %table% \n\n The table summarizes the findings from the below list of papers about %condition%. Make sure to cite them in the report. \n List of papers: \n %papers%"
+FORMATTING_SUMMARY_PROMPT = "Review the requirements for publishing a paper contained in the below URL and create a concise summary of them. \n URL: "
+FINETUNING_PROMPT = "Re-organize and proof-read the contents of the attached file. Avoid providing any explanations on the changes. Only re-organize and improve the document to resemble a good scientific report. While drafting, stick to the below style guide \n Abstract Summary\n %abstract_summary% \n Style guide \n %style_summary% "
+ABSTRACT_DRAFTING_PROMPT = "You are an expert microbiologist. Compare the data in the below table (about the microbiome of %condition%) against the provided research paper summary and draft the abstract of a research paper review. \n Table \n %consolidated_table% \n The above table summarizes the findings from a list of related research papers. \n Summary of research paper: \n %inoculum_summary%"
+INTRO_DRAFTING_PROMPT = "You are an expert microbiologist. Take the below abstract summary and draft an introduction chapter to it. Whenever relevant, provide real bibliographic references along the text."
+REVIEW_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create a review of a research paper. Take the below abstract summary and data table and draft a review based in both. Draft only the main body of the review and omit the review’s Introduction, Discussion or Conclusions parts, as these will be drafted by someone else. \n Abstract Summary \n %abstract_summary% \n Data Table \n %consolidated_table% "
+DISCUSSION_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create the ‘Discussion’ section of a research paper review. Take the below summary of the main body of the review and draft the Discussion section based in it. Draft only the Discussion section of the review and omit the review’s Introduction, Main Body or Conclusions parts, as these will be drafted by someone else. \n Summary of Research Paper Review: \n %review_summary%"
+CONCLUSIONS_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create the ‘Conclusions’ section of a research paper review. Take the below summary of the main body of the review and draft the Conclusions section based in it. Draft only the Conclusions section of the review and omit the review’s Introduction, Main Body or Discussions parts, as these will be drafted by someone else. \n Summary of Research Paper Review: \n %review_summary%"
+BIBLIOGRAPHY_EVALUATION_PROMPT = "You are an expert microbiologist. Please evaluate the attached scientific report's bibliography to determine its relevance to the overall topic. Specifically, assess if the sources cited are appropriate and pertinent to the subject matter. Additionally, identify any significant papers or key references that may be missing from the bibliography."
+SUMMARY_PROMPT = "Provide a very concise summary of the provided text: "
+ELABORATE_PROMPT = "Elaborate further on the below review summary: "
+MODEL = "openai"
+OUTPUT_REPORT_NAME1 = "one_shot_article.txt"
+OUTPUT_REPORT_NAME2 = "stitched_article.txt"
+PROVISIONAL_REPORT_NAME = "provisional_article.txt"
+FULL_ART_EVAL1 = "EVAL_one_shot_article.txt"
+FULL_ART_EVAL2 = "EVAL_stitched_article.txt"
+GENERAL_MAX_TOKENS = 2500
+EVALUATING = True
+
 # OpenAI
 OPENAI_LOG_FILE = 'openai_log.txt'
 DATA_FILE = "differential_genera_input.txt"
@@ -9,12 +42,11 @@ MAX_TOKENS = 2500
 # Google
 WAIT_TIME = 5
 GOOGLE_LOG_FILE = 'google_log.txt'
-MAX_TOKENS = 2500
 
-
+# Evaluation
 URL_INDEX = 1
 REPORT_EVALUATION_PROMPT = "From the attached scientific report, evaluate its formal elements and enumerate its strengths and its weaknesses."
-EVALUATION_CRITERIA = [['Supplementary Information','1.'], ['Species names','2.'], ['Phylogeny','3.'], ['Gene names','4.'], ['Experimental information','5.']]
+EVALUATION_CRITERIA = [['Supplementary Information', '1.'], ['Species names', '2.'], ['Phylogeny', '3.'], ['Gene names', '4.'], ['Experimental information', '5.']]
 EVAL1_PATH = "evaluation/1_articles_from_query.txt"
 EVAL2_PATH = "evaluation/2_article_relevance.txt"
 EVAL3_PATH = "evaluation/3_bacteria_relevance.txt"
@@ -22,36 +54,8 @@ EVAL4_PATH = "evaluation/4_consolidated_vs_individual.txt"
 EVAL5_PATH = "evaluation/5_individual_vs_consolidated.txt"
 EVAL6_PATH = "evaluation/6_final_report_evaluation.txt"
 
-JOURNALS_SOURCE = "nature.com"
-DATASET_GENERATING_PROMPT = f'Use your browser tool to find in {JOURNALS_SOURCE} %num% recent papers about microbiome and %condition%. From each paper, extract its citation information under "Cite this Article" as well as its DOI (only if available), and using only the information included in the papers (and not in your previous training) create a table containing citation information, DOI and paper URLs (both in plain text format, not clickable links) for each one of the %num% papers, and a flag of whether or not the given paper is related with %condition% and contains data of interest (which we will define as information about bacteria species names, phylogeny, gene names and experimental information). The above table should be in a pipe-delimited format with the following columns: Article_Title, Citation_Information, DOI, URL, data_of_interest. The data_of_interest column will be boolean. Each row should refer to an article. Do not include a preamble or introductory paragraph before the table. Only return the tab-separated table.'
-DOCUMENT_INSPECTION_PROMPT = f''
-TABLES_FIRST_COLUMN = "Article_Title"
-WORKING_PATH = "output/"
-URLS_COLUMN = "URL"
-INOCULUM_INSPECTION_PROMPT = "Provide an APA citation of the paper under the following URL: "
-INSPECTION_PROMPT = "From the below URL, extract the following information: \n 1. If it contains Supplementary Information (Yes/No) \n 2. If it contains information on species names (Yes/No) \n 3. If it contains phylogeny (Yes/No) \n 4. If it contains gene names (Yes/No) \n 5. If it contains experimental information on %condition% and control groups (Yes/No) \n These elements can be extracted from the text of the paper or from any Supplementary Data provided with the paper. \n URL: %URL%"
-DOI_PROMPT = "From the below URL, extract the DOI. If no DOI is found in the page, return NA. \n Use the following format for your output: \n 10.1038/s41598-018-27682-w \n \n URL: "
-SUMMARIZING_PROMPT = "Create a table about the most outstanding bacteria species that are mentioned in the paper. The table should also contain any information provided about the phylogeny, gene names (and whether they are overexpressed or under-expressed), their gene functions (using GO), biochemical pathways and health status. The table should contain the following columns: species_name, phylogeny, gene_name, expression_status, gene_function, biochemical_pathway, health_status, disease_name. If any of the referred pieces of information are not available in the paper or its supplementary data, mark the observation as NA. The table should follow this format example: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension \n\n URL: "
-CONSOLIDATING_PROMPT = "Below are %num% table summaries from different microbiology papers about %condition%. You are an expert microbiologist and your task is to consolidate the results from the below tables into a single one, making sure to capture the most important elements. Follow this sample format: \n species_name|phylogeny|gene_name|expression_status|gene_function|biochemical_pathway|health_status|disease_name|DOI\nBacteroides fragilis|Bacteroidetes|butyryl-CoA CoA-transferase|Overexpressed|GO:0006084|Butyrate biosynthesis|Hypertensive|Hypertension|10.1234/a123-456 \n\n Table summaries: "
-DRAFTING_PROMPT = "You are an expert microbiologist. Take the below table as the basis to draft an academic paper about the microbiome of %condition% with all of its formal elements. Table \n %table% \n\n The table summarizes the findings from the below list of papers about %condition%. Make sure to cite them in the report. \n List of papers: \n %papers%"
-FORMATTING_SUMMARY_PROMPT = "Review the requirements for publishing a paper contained in the below URL and create a concise summary of them. \n URL: "
-FINETUNING_PROMPT = ""
-ABSTRACT_DRAFTING_PROMPT = "You are an expert microbiologist. Compare the data in the below table (about the microbiome of %condition%) against the provided research paper summary and draft the abstract of a research paper review. \n Table \n %consolidated_table% \n The above table summarizes the findings from a list of related research papers. \n Summary of research paper: \n %inoculum_summary%"
-INTRO_DRAFTING_PROMPT = "You are an expert microbiologist. Take the below abstract summary and draft an introduction chapter to it. Whenever relevant, provide real bibliographic references along the text. While drafting, stick to the below style guide \n Abstract Summary\n %abstract_summary% \n Style guide \n %style_summary%"
-REVIEW_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create a review of a research paper. Take the below abstract summary and data table and draft a review based in both. Draft only the main body of the review and omit the review’s Introduction, Discussion or Conclusions parts, as these will be drafted by someone else. \n Abstract Summary \n %abstract_summary% \n Data Table \n %consolidated_table% \n Style guide \n %style_summary%"
-DISCUSSION_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create the ‘Discussion’ section of a research paper review. Take the below summary of the main body of the review and draft the Discussion section based in it. Draft only the Discussion section of the review and omit the review’s Introduction, Main Body or Conclusions parts, as these will be drafted by someone else. \n Summary of Research Paper Review: \n %review_summary%"
-CONCLUSIONS_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create the ‘Conclusions’ section of a research paper review. Take the below summary of the main body of the review and draft the Conclusions section based in it. Draft only the Conclusions section of the review and omit the review’s Introduction, Main Body or Discussions parts, as these will be drafted by someone else. \n Summary of Research Paper Review: \n %review_summary%"
-SUMMARY_PROMPT = "Provide a very concise summary of the provided text: "
-ELABORATE_PROMPT = "Elaborate further on the below review summary: "
-EVALUATING = 0
 
-MODEL = "openai"
-OUTPUT_REPORT_NAME = "drafted_article.txt"
-GENERAL_MAX_TOKENS = 2500
-URL_INDEX = 1
-
-
-# Paper vs Paper evaluation
+### ---------------------------- Paper vs Paper evaluation ----------------------------------
 GENERATING_PROMPT = "You are a microbiologist. Write a scientific report based on the following research objectives, together with the findings of the differential abundance analysis table attached. Provide recent references with real DOI, including authors and titles. \n"
 SINGLE_EVALUATION_PROMPT = """Below is an academic text and you are an expert microbiologist. Review the article and provide an expert opinion regarding the following: \n 1. General quality of the paper. \n 2. Text coherence. \n 3. Formal elements. \n 4. Originality and usefulness of any findings. \n\n Academic Text: \n"""
 PAIR_EVALUATION_PROMPT = """Below are two academic texts. Each one was drafted by a different author. The first author may have had access to more complete data than the second one but both authors had access to some of the same data. Evaluate if the second text is compatible with any findings or conclusions of the first text. Only answer True or False, as in the example below: 

@@ -11,14 +11,15 @@ import datetime
 import tkinter as tk
 from tkinter import simpledialog
 from CONSTANTS import *
+import shutil
 
 
-def ask_question(this_question: str, data_file: str = "", model='openai', tmax_tokens:int=GENERAL_MAX_TOKENS) -> str:
+def ask_question(this_question: str, data_file: str = "", model='openai', tmax_tokens:int=GENERAL_MAX_TOKENS, model_version: str="") -> str:
     assert model.lower() in ['gemini', 'openai', 'olmo'], "Available evaluator options are gemini, openai, olmo!"
     if model.lower() == 'gemini':
-        response = query_gemini(this_question, data_file, tmax_tokens=tmax_tokens)
+        response = query_gemini(this_question, data_file, tmax_tokens=tmax_tokens, model_version=model_version)
     elif model.lower() == 'openai':
-        response = query_openai(this_question, data_file, tmax_tokens=tmax_tokens)
+        response = query_openai(this_question, data_file, tmax_tokens=tmax_tokens, model_version=model_version)
     elif model.lower() == 'olmo':
         #response = query_olmo(this_question, data_file)
         print("OLMo coming soon")
@@ -109,7 +110,7 @@ def extract_page_doi(this_URL: str) -> str:
     return output
 
 
-def save_results(full_path:str, message_to_save:str):
+def save_results(full_path: str, message_to_save:str):
     with open(full_path, 'a', encoding='utf-8') as f:
         f.write(str(datetime.datetime.now())+'\n')
         f.write(str(message_to_save)+'\n\n')
@@ -204,11 +205,11 @@ def consolidate_tables(document_summaries: list) -> str:
     return consolidation
 
 
-def draft_article(consolidated_table:str, condition:str, papers:list, model="openai", tmax_tokens=10000) -> str:
+def draft_article(consolidated_table:str, condition:str, papers:list, model="openai", tmax_tokens=7500) -> str:
     new_prompt = DRAFTING_PROMPT.replace('%table%', consolidated_table) # table, condition, papers
     new_prompt = new_prompt.replace('%condition%', condition)
     new_prompt = new_prompt.replace('%papers%', "\t".join([x[0] + " - " + x[1] + " : " + x[2] for x in papers]))
-    article = ask_question(new_prompt, tmax_tokens=tmax_tokens, model=model)
+    article = ask_question(new_prompt, tmax_tokens=tmax_tokens, model=model, model_version="gpt-4")
     return article
 
 
@@ -233,12 +234,12 @@ def draft_intro(abstract_summary: str, style_guide: str) -> str:
     return intro
 
 
-def draft_this(my_prompt: str, my_kwargs: dict, new_element_name: str, tokens=GENERAL_MAX_TOKENS, model='openai') -> dict:
+def draft_this(my_prompt: str, my_kwargs: dict, new_element_name: str, attached_file="", tokens=GENERAL_MAX_TOKENS, model='openai') -> dict:
     keywords = re.findall(r'%\w+%', my_prompt)
     new_prompt = my_prompt
     for each_keyword in keywords:
         new_prompt = new_prompt.replace(each_keyword, my_kwargs[each_keyword])
-    new_element = ask_question(new_prompt, tmax_tokens=tokens, model=model)
+    new_element = ask_question(new_prompt, tmax_tokens=tokens, model=model, data_file=attached_file)
     my_kwargs[new_element_name] = new_element
     return my_kwargs
 
@@ -250,21 +251,37 @@ def stitch(my_kwargs: dict, elements: list) -> str:
     return full_text
 
 
+def initialize_directory():
+    if not os.path.exists(WORKING_PATH):
+        os.makedirs(WORKING_PATH)
+    if not os.path.exists(LOGS_PATH):
+        os.makedirs(LOGS_PATH)
+
+
+def get_study_path(paper_elements: dict) -> str:
+    condition = paper_elements['%condition%']
+    assert condition != "", "Provided health condition is empty!"
+    condition = condition.replace(' ', '_')
+    condition = re.sub('[^A-Za-z0-9\_]+', '', condition)
+    condition = condition.lower()
+    return condition
+
+
 def generate_report(model="openai"):
     # Find relevant literature
     paper_elements = ask_parameters()
-    paper_elements['%inoculum_details%'] = extract_inoculum_details(paper_elements['%inoculum%'], model='gemini')
+    initialize_directory()
+    paper_elements['%inoculum_details%'] = extract_inoculum_details(paper_elements['%inoculum%'], model='openai')
     paper_elements['%docs_list%'] = get_mixed_links(paper_elements['%condition%'])
 
-    # Use spaCy instead?
     paper_elements['%acceptable_docs%'] = find_n_acceptable(paper_elements)
     paper_elements['%acceptable_docs%'].append(paper_elements['%inoculum_details%'])
     paper_elements['%document_summaries%'] = extract_document_summaries(paper_elements['%acceptable_docs%'], "openai")
     paper_elements['%consolidated_table%'] = consolidate_tables(paper_elements['%document_summaries%'])
 
     # Summarize and draft report
-    # article = draft_article(consolidated_table, user_parameters['%condition%'][0], acceptable_docs, 'openai')
-    paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%inoculum_details%'][URL_INDEX], paper_elements, '%inoculum_summary%', model='gemini')
+    paper_elements['%one_shot_article%'] = draft_article(paper_elements['%consolidated_table%'], paper_elements['%condition%'][0], paper_elements['%acceptable_docs%'], 'openai')
+    paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%inoculum_details%'][URL_INDEX], paper_elements, '%inoculum_summary%', model='openai')
     paper_elements = draft_this(ABSTRACT_DRAFTING_PROMPT, paper_elements, '%abstract%', model='gemini')
     paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%abstract%'], paper_elements, '%abstract_summary%', model='gemini')
     paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%style_guide%'], paper_elements, '%style_summary%', model='gemini')
@@ -274,14 +291,29 @@ def generate_report(model="openai"):
     paper_elements = draft_this(DISCUSSION_DRAFTING_PROMPT, paper_elements, '%discussion%', tokens=7000, model='gemini')
     paper_elements = draft_this(CONCLUSIONS_DRAFTING_PROMPT, paper_elements, '%conclusions%', model='gemini')
     paper_elements = draft_this(ELABORATE_PROMPT + paper_elements['%review_summary%'], paper_elements, '%further_review%', tokens=7000, model='gemini')
-    full_text = stitch(paper_elements, ['%abstract%', '%introduction%', '%review%', '%discussion%', '%conclusions%', '%further_review%'])
+    paper_elements['%stitched_text%'] = stitch(paper_elements, ['%abstract%', '%introduction%', '%review%', '%discussion%', '%conclusions%', '%further_review%'])
 
-    with open(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME), 'w') as report:
-        report.write(full_text)
+    with open(os.path.join(WORKING_PATH, PROVISIONAL_REPORT_NAME), 'w') as report1:
+        report1.write(paper_elements['%stitched_text%'])
+
+    paper_elements = draft_this(FINETUNING_PROMPT, paper_elements, '%final_stitched%',
+                                attached_file=os.path.join(WORKING_PATH, PROVISIONAL_REPORT_NAME), tokens=7000,
+                                model='gemini')
+
+    with open(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME2), 'w') as report2:
+        report2.write(paper_elements['%final_stitched%'])
+
+    with open(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME1), 'w') as report3:
+        report3.write(paper_elements['%one_shot_article%'])
 
     if EVALUATING:
         evaluate_process(paper_elements)
-        evaluate_final_report(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME))
+        evaluate_final_report(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME1), FULL_ART_EVAL1)
+        evaluate_final_report(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME2), FULL_ART_EVAL2)
+
+    # Copy all outputs to a study-specific folder
+    study_path = get_study_path(paper_elements)
+    shutil.copytree(WORKING_PATH, study_path)
 
 
 if __name__ == "__main__":

@@ -91,29 +91,36 @@ def evaluate_paper_false_positives(paper_elements: dict) -> pd.DataFrame:
     for each_source in all_sources:
         each_url = each_source[1]
         page_text = get_page_text(each_url).lower()
-        for each_bacteria in all_bacteria_lists:
-            is_present = each_bacteria.lower() in page_text
-            this_bacteria = pd.DataFrame({'source': [each_url], 'extracted_bacteria': [each_bacteria], 'is_present': [is_present]})
-            results_table = pd.concat([results_table, this_bacteria])
+        for each_individual_list in all_bacteria_lists:
+            for each_bacteria in each_individual_list:
+                is_present = each_bacteria.lower() in page_text
+                this_bacteria = pd.DataFrame({'source': [each_url], 'extracted_bacteria': [each_bacteria], 'is_present': [is_present]})
+                results_table = pd.concat([results_table, this_bacteria])
     return results_table
 
 
 def are_consolidated_from_individual(paper_elements: dict) -> pd.DataFrame:
-    consolidated_table = extract_bacteria_lists_from_text_tables([paper_elements['%consolidated_table%']])
-    all_bacteria_lists = extract_bacteria_lists_from_text_tables(paper_elements['%document_summaries%'])
+    def _flatten(xss):
+        return [x for xs in xss for x in xs]
+    consolidated_table = _flatten(extract_bacteria_lists_from_text_tables([paper_elements['%consolidated_table%']]))
+    all_bacteria_lists = _flatten(extract_bacteria_lists_from_text_tables(paper_elements['%document_summaries%']))
     is_present = []
-    for each_consolidated in consolidated_table:
-        if each_consolidated in all_bacteria_lists:
+    all_bacteria = []
+    for each_bacteria in consolidated_table:
+        all_bacteria.append(each_bacteria)
+        if each_bacteria in all_bacteria_lists:
             is_present.append(True)
         else:
             is_present.append(False)
-    output = pd.DataFrame({'each_consolidated': consolidated_table, 'present_in_individual_table': is_present})
+    output = pd.DataFrame({'each_consolidated': all_bacteria, 'present_in_individual_table': is_present})
     return output
 
 
 def were_all_individual_consolidated(paper_elements: dict) -> pd.DataFrame:
-    consolidated_table = extract_bacteria_lists_from_text_tables([paper_elements['%consolidated_table%']])
-    all_bacteria_lists = extract_bacteria_lists_from_text_tables(paper_elements['%document_summaries%'])
+    def _flatten(xss):
+        return [x for xs in xss for x in xs]
+    consolidated_table = _flatten(extract_bacteria_lists_from_text_tables([paper_elements['%consolidated_table%']]))
+    all_bacteria_lists = _flatten(extract_bacteria_lists_from_text_tables(paper_elements['%document_summaries%']))
     is_present = []
     for each_original in all_bacteria_lists:
         if each_original in consolidated_table:
@@ -129,11 +136,10 @@ def evaluate_report_formal_elements(final_report_path) -> str:
     return evaluation
 
 
-def evaluate_bibliography():
-    # Should we check DOIs?
-    # Should we check in-line references vs bibliography?
-    # Should we check bibliography vs some library repository?
-    pass
+def evaluate_bibliography(final_report_path):
+    # Ask the LLM if the bibliography is appropriate
+    evaluation = ask_question(BIBLIOGRAPHY_EVALUATION_PROMPT, final_report_path)
+    return evaluation
 
 
 def evaluate_process(paper_elements: dict):
@@ -148,7 +154,9 @@ def evaluate_process(paper_elements: dict):
     individual_vs_consolidated.to_csv(EVAL5_PATH, sep="\t", index=False)
 
 
-def evaluate_final_report(report_path: str):
+def evaluate_final_report(report_path: str, report_eval_path: str):
     report_evaluation = evaluate_report_formal_elements(report_path)
-    save_results(report_evaluation)
+    save_results(report_eval_path, report_evaluation)
     # Bibliography review
+    bibliography_eval = evaluate_bibliography(report_path)
+    save_results(report_eval_path.replace(".txt", "_bibliography.txt"), bibliography_eval)

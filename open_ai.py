@@ -20,8 +20,10 @@ def convert_file_to_json(txt_file_path: str) -> str:
     return str(json_data)
 
 
-def query_openai(question: str, data_file: str = '', tmax_tokens=MAX_TOKENS, temperature=0.3):
+def query_openai(question: str, data_file: str = '', tmax_tokens=MAX_TOKENS, temperature=0.3, model_version: str="gpt-3.5-turbo-0125"):
     assert question != "", "Empty question to the model!"
+    if model_version == "":
+        model_version = "gpt-3.5-turbo-0125"
     if tmax_tokens > 14096:
         print("Model's max number of tokens is 4096! Truncating")
         tmax_tokens = 4096
@@ -38,7 +40,7 @@ def query_openai(question: str, data_file: str = '', tmax_tokens=MAX_TOKENS, tem
                 "role": "user", "content": prompt
             }
         ],
-        model="gpt-3.5-turbo-0125",
+        model=model_version,
         #model="gpt-4",
         #model="gpt-4-32k",
         max_tokens=tmax_tokens,
@@ -46,7 +48,7 @@ def query_openai(question: str, data_file: str = '', tmax_tokens=MAX_TOKENS, tem
     )
     time.sleep(AI_WAIT_TIME)
     print(chat_completion.choices[0].message.content)
-    with open(OPENAI_LOG_FILE, 'a', encoding='utf-8') as f:
+    with open(os.path.join(LOGS_PATH, OPENAI_LOG_FILE), 'a', encoding='utf-8') as f:
         f.write(str(datetime.datetime.now())+'\n')
         f.write(str(chat_completion)+'\n\n')
     return chat_completion.choices[0].message.content
