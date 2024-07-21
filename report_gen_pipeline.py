@@ -12,6 +12,7 @@ import tkinter as tk
 from tkinter import simpledialog
 from CONSTANTS import *
 import shutil
+import pickle
 
 
 def ask_question(this_question: str, data_file: str = "", model='openai', tmax_tokens:int=GENERAL_MAX_TOKENS, model_version: str="") -> str:
@@ -129,7 +130,7 @@ def find_n_acceptable(all_elements: dict) -> list:
         print(f"Evaluating {each_paper[0]}...")
         elements = inspect_paper_elements(each_paper[1], condition)
         evaluations.append(elements)
-        if elements.count('Yes') >= 5:
+        if elements.count('Yes') >= NUMBER_OF_ELEMENTS:
             doi = extract_page_doi(each_paper[1])
             each_paper.append(doi)
             acceptable.append(each_paper)
@@ -139,7 +140,7 @@ def find_n_acceptable(all_elements: dict) -> list:
         print(f"Not enough acceptable papers found for {condition}! Only {acceptable.__len__()} found.")
     if EVALUATING:
         scores_table = evaluate_article_relevance(evaluations)
-        scores_table.to_csv(EVAL2_PATH, sep="\t", index=False)
+        scores_table.to_csv(os.path.join(WORKING_PATH, EVAL2_PATH), sep="\t", index=False)
     return acceptable
 
 
@@ -205,11 +206,12 @@ def consolidate_tables(document_summaries: list) -> str:
     return consolidation
 
 
-def draft_article(consolidated_table:str, condition:str, papers:list, model="openai", tmax_tokens=7500) -> str:
+def draft_article(consolidated_table:str, condition:str, papers:list, model="gemini", tmax_tokens=7000) -> str:
     new_prompt = DRAFTING_PROMPT.replace('%table%', consolidated_table) # table, condition, papers
     new_prompt = new_prompt.replace('%condition%', condition)
     new_prompt = new_prompt.replace('%papers%', "\t".join([x[0] + " - " + x[1] + " : " + x[2] for x in papers]))
-    article = ask_question(new_prompt, tmax_tokens=tmax_tokens, model=model, model_version="gpt-4")
+    article = ask_question(new_prompt, tmax_tokens=tmax_tokens, model=model)
+    time.sleep(80)
     return article
 
 
@@ -241,6 +243,7 @@ def draft_this(my_prompt: str, my_kwargs: dict, new_element_name: str, attached_
         new_prompt = new_prompt.replace(each_keyword, my_kwargs[each_keyword])
     new_element = ask_question(new_prompt, tmax_tokens=tokens, model=model, data_file=attached_file)
     my_kwargs[new_element_name] = new_element
+    print(datetime.datetime.now())
     return my_kwargs
 
 
@@ -254,6 +257,9 @@ def stitch(my_kwargs: dict, elements: list) -> str:
 def initialize_directory():
     if not os.path.exists(WORKING_PATH):
         os.makedirs(WORKING_PATH)
+    evaluation = os.path.join(WORKING_PATH, 'evaluation')
+    if not os.path.exists(evaluation):
+        os.makedirs(evaluation)
     if not os.path.exists(LOGS_PATH):
         os.makedirs(LOGS_PATH)
 
@@ -279,12 +285,15 @@ def generate_report(model="openai"):
     paper_elements['%document_summaries%'] = extract_document_summaries(paper_elements['%acceptable_docs%'], "openai")
     paper_elements['%consolidated_table%'] = consolidate_tables(paper_elements['%document_summaries%'])
 
+    with open(os.path.join(WORKING_PATH, STUDY_OBJECT), 'wb') as outp:
+        pickle.dump(paper_elements, outp, pickle.HIGHEST_PROTOCOL)
+
     # Summarize and draft report
-    paper_elements['%one_shot_article%'] = draft_article(paper_elements['%consolidated_table%'], paper_elements['%condition%'][0], paper_elements['%acceptable_docs%'], 'openai')
+    paper_elements['%one_shot_article%'] = draft_article(paper_elements['%consolidated_table%'], paper_elements['%condition%'][0], paper_elements['%acceptable_docs%'], 'gemini')
     paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%inoculum_details%'][URL_INDEX], paper_elements, '%inoculum_summary%', model='openai')
     paper_elements = draft_this(ABSTRACT_DRAFTING_PROMPT, paper_elements, '%abstract%', model='gemini')
     paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%abstract%'], paper_elements, '%abstract_summary%', model='gemini')
-    paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%style_guide%'], paper_elements, '%style_summary%', model='gemini')
+    paper_elements = draft_this(STYLE_SUMMARY_PROMPT + paper_elements['%style_guide%'], paper_elements, '%style_summary%', model='openai')
     paper_elements = draft_this(INTRO_DRAFTING_PROMPT, paper_elements, '%introduction%', model='gemini')
     paper_elements = draft_this(REVIEW_DRAFTING_PROMPT, paper_elements, '%review%', tokens=7000, model='gemini')
     paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%review%'], paper_elements, '%review_summary%', tokens=7000, model='gemini')
@@ -293,24 +302,31 @@ def generate_report(model="openai"):
     paper_elements = draft_this(ELABORATE_PROMPT + paper_elements['%review_summary%'], paper_elements, '%further_review%', tokens=7000, model='gemini')
     paper_elements['%stitched_text%'] = stitch(paper_elements, ['%abstract%', '%introduction%', '%review%', '%discussion%', '%conclusions%', '%further_review%'])
 
-    with open(os.path.join(WORKING_PATH, PROVISIONAL_REPORT_NAME), 'w') as report1:
+    with open(os.path.join(WORKING_PATH, PROVISIONAL_REPORT_NAME), 'w', encoding='utf-8') as report1:
         report1.write(paper_elements['%stitched_text%'])
 
     paper_elements = draft_this(FINETUNING_PROMPT, paper_elements, '%final_stitched%',
                                 attached_file=os.path.join(WORKING_PATH, PROVISIONAL_REPORT_NAME), tokens=7000,
                                 model='gemini')
 
-    with open(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME2), 'w') as report2:
+    with open(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME2), 'w', encoding='utf-8') as report2:
         report2.write(paper_elements['%final_stitched%'])
 
-    with open(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME1), 'w') as report3:
+    with open(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME1), 'w', encoding='utf-8') as report3:
         report3.write(paper_elements['%one_shot_article%'])
 
     if EVALUATING:
+        # Save all study data
+        with open(os.path.join(WORKING_PATH, STUDY_OBJECT), 'wb') as outp:
+            pickle.dump(paper_elements, outp, pickle.HIGHEST_PROTOCOL)
+        # Evaluate throughput and outputs
         evaluate_process(paper_elements)
-        evaluate_final_report(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME1), FULL_ART_EVAL1)
-        evaluate_final_report(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME2), FULL_ART_EVAL2)
+        evaluate_final_report(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME1), os.path.join(WORKING_PATH, EVAL6_ONE_SHOT_PATH))
+        evaluate_final_report(os.path.join(WORKING_PATH, OUTPUT_REPORT_NAME2), os.path.join(WORKING_PATH, EVAL6_STITCHED_PATH))
 
+    # Save all study data
+    with open(os.path.join(WORKING_PATH, STUDY_OBJECT), 'wb') as outp:
+        pickle.dump(paper_elements, outp, pickle.HIGHEST_PROTOCOL)
     # Copy all outputs to a study-specific folder
     study_path = get_study_path(paper_elements)
     shutil.copytree(WORKING_PATH, study_path)

@@ -122,36 +122,40 @@ def were_all_individual_consolidated(paper_elements: dict) -> pd.DataFrame:
     consolidated_table = _flatten(extract_bacteria_lists_from_text_tables([paper_elements['%consolidated_table%']]))
     all_bacteria_lists = _flatten(extract_bacteria_lists_from_text_tables(paper_elements['%document_summaries%']))
     is_present = []
+    all_bacteria = []
     for each_original in all_bacteria_lists:
+        all_bacteria.append(each_original)
         if each_original in consolidated_table:
             is_present.append(True)
         else:
             is_present.append(False)
-    output = pd.DataFrame({'each_original': consolidated_table, 'present_in_consolidated_table': is_present})
+    output = pd.DataFrame({'each_original': all_bacteria, 'present_in_consolidated_table': is_present})
     return output
 
 
 def evaluate_report_formal_elements(final_report_path) -> str:
     evaluation = ask_question(REPORT_EVALUATION_PROMPT, final_report_path)
+    time.sleep(10)
     return evaluation
 
 
 def evaluate_bibliography(final_report_path):
     # Ask the LLM if the bibliography is appropriate
     evaluation = ask_question(BIBLIOGRAPHY_EVALUATION_PROMPT, final_report_path)
+    time.sleep(10)
     return evaluation
 
 
 def evaluate_process(paper_elements: dict):
     relevant_articles = count_relevant_articles(paper_elements)
-    relevant_articles.to_csv(EVAL1_PATH, sep="\t", index=False)
+    relevant_articles.to_csv(os.path.join(WORKING_PATH, EVAL1_PATH), sep="\t", index=False)
     #EVAL2_PATH saved within 'find_n_acceptable' function
     table_bacteria_vs_paper = evaluate_paper_false_positives(paper_elements)
-    table_bacteria_vs_paper.to_csv(EVAL3_PATH, sep="\t", index=False)
+    table_bacteria_vs_paper.to_csv(os.path.join(WORKING_PATH, EVAL3_PATH), sep="\t", index=False)
     consolidated_vs_individual = are_consolidated_from_individual(paper_elements)
-    consolidated_vs_individual.to_csv(EVAL4_PATH, sep="\t", index=False)
+    consolidated_vs_individual.to_csv(os.path.join(WORKING_PATH, EVAL4_PATH), sep="\t", index=False)
     individual_vs_consolidated = were_all_individual_consolidated(paper_elements)
-    individual_vs_consolidated.to_csv(EVAL5_PATH, sep="\t", index=False)
+    individual_vs_consolidated.to_csv(os.path.join(WORKING_PATH, EVAL5_PATH), sep="\t", index=False)
 
 
 def evaluate_final_report(report_path: str, report_eval_path: str):
