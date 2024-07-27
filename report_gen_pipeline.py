@@ -288,8 +288,14 @@ def generate_report(model="openai"):
     with open(os.path.join(WORKING_PATH, STUDY_OBJECT), 'wb') as outp:
         pickle.dump(paper_elements, outp, pickle.HIGHEST_PROTOCOL)
 
+    time.sleep(10)
     # Summarize and draft report
-    paper_elements['%one_shot_article%'] = draft_article(paper_elements['%consolidated_table%'], paper_elements['%condition%'][0], paper_elements['%acceptable_docs%'], 'gemini')
+    try:
+        paper_elements['%one_shot_article%'] = draft_article(paper_elements['%consolidated_table%'], paper_elements['%condition%'][0], paper_elements['%acceptable_docs%'], 'gemini')
+    except ValueError:
+        paper_elements['%one_shot_article%'] = draft_article(paper_elements['%consolidated_table%'],
+                                                             paper_elements['%condition%'][0],
+                                                             paper_elements['%acceptable_docs%'], 'openai')
     paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%inoculum_details%'][URL_INDEX], paper_elements, '%inoculum_summary%', model='openai')
     paper_elements = draft_this(ABSTRACT_DRAFTING_PROMPT, paper_elements, '%abstract%', model='gemini')
     paper_elements = draft_this(SUMMARY_PROMPT + paper_elements['%abstract%'], paper_elements, '%abstract_summary%', model='gemini')

@@ -88,14 +88,14 @@ def evaluate_paper_false_positives(paper_elements: dict) -> pd.DataFrame:
     all_bacteria_lists = extract_bacteria_lists_from_text_tables(paper_elements['%document_summaries%'])
     all_sources = paper_elements['%acceptable_docs%']
     results_table = pd.DataFrame()
-    for each_source in all_sources:
+    for x, each_source in enumerate(all_sources):
         each_url = each_source[1]
         page_text = get_page_text(each_url).lower()
-        for each_individual_list in all_bacteria_lists:
-            for each_bacteria in each_individual_list:
-                is_present = each_bacteria.lower() in page_text
-                this_bacteria = pd.DataFrame({'source': [each_url], 'extracted_bacteria': [each_bacteria], 'is_present': [is_present]})
-                results_table = pd.concat([results_table, this_bacteria])
+        each_individual_list = all_bacteria_lists[x]
+        for each_bacteria in each_individual_list:
+            is_present = each_bacteria.lower() in page_text
+            this_bacteria = pd.DataFrame({'source': [each_url], 'extracted_bacteria': [each_bacteria], 'is_present': [is_present]})
+            results_table = pd.concat([results_table, this_bacteria])
     return results_table
 
 
