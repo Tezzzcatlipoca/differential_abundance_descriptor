@@ -149,7 +149,7 @@ def evaluate_bibliography(final_report_path):
 def evaluate_process(paper_elements: dict):
     relevant_articles = count_relevant_articles(paper_elements)
     relevant_articles.to_csv(os.path.join(WORKING_PATH, EVAL1_PATH), sep="\t", index=False)
-    #EVAL2_PATH saved within 'find_n_acceptable' function
+    # EVAL2_PATH defined within 'find_n_acceptable' function
     table_bacteria_vs_paper = evaluate_paper_false_positives(paper_elements)
     table_bacteria_vs_paper.to_csv(os.path.join(WORKING_PATH, EVAL3_PATH), sep="\t", index=False)
     consolidated_vs_individual = are_consolidated_from_individual(paper_elements)
