@@ -1,0 +1,60 @@
+each_original	present_in_consolidated_table
+Escherichia coli	True
+Clostridium difficile	True
+Lactobacillus acidophilus	True
+Staphylococcus aureus	True
+Bacteroides fragilis	True
+Escherichia coli	True
+Lactobacillus	False
+Streptococcus	False
+Bacteroides fragilis	True
+Escherichia coli	True
+Lactobacillus reuteri	True
+Bacteroides fragilis	True
+Escherichia coli	True
+Clostridium difficile	True
+Streptococcus pneumoniae	True
+Helicobacter pylori	True
+Bacteroides fragilis	True
+Escherichia coli	True
+Lactobacillus	False
+Streptococcus	False
+Bacteroides fragilis	True
+Escherichia coli	True
+Lactobacillus	False
+Streptococcus	False
+Bacteroides fragilis	True
+Escherichia coli	True
+Staphylococcus aureus	True
+Clostridium difficile	True
+Helicobacter pylori	True
+Bacteroides fragilis	True
+Escherichia coli	True
+Lactobacillus reuteri	True
+Bacteroides fragilis	True
+Escherichia coli	True
+Clostridium difficile	True
+Lactobacillus	False
+Streptococcus	False
+Escherichia coli	True
+Streptococcus mutans	False
+Lactobacillus acidophilus	True
+Bifidobacterium longum	False
+Escherichia coli	True
+Bacillus subtilis	False
+Staphylococcus aureus	True
+Clostridium difficile	True
+Helicobacter pylori	True
+Escherichia coli	True
+Bacteroides fragilis	True
+Lactobacillus plantarum	False
+Streptococcus mutans	False
+Escherichia coli	True
+Bacteroides fragilis	True
+Lactobacillus reuteri	True
+Clostridium difficile	True
+Bacteroides fragilis	True
+Escherichia coli	True
+Lactobacillus	False
+Clostridium difficile	True
+Streptococcus	False

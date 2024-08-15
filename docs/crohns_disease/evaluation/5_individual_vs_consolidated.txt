@@ -1,0 +1,31 @@
+each_original	present_in_consolidated_table
+Escherichia coli	True
+Staphylococcus aureus	True
+Clostridium difficile	True
+Salmonella enterica	True
+Bacteroides fragilis	True
+Escherichia coli	True
+Lactobacillus	False
+Streptococcus	False
+Bacteroides fragilis	True
+Escherichia coli	True
+Lactobacillus acidophilus	True
+Streptococcus mutans	True
+Escherichia coli	True
+Lactobacillus plantarum	False
+Streptococcus mutans	True
+Escherichia coli	True
+Streptococcus pneumoniae	False
+Lactobacillus plantarum	False
+Pseudomonas aeruginosa	False
+Bacteroides fragilis	True
+Escherichia coli	True
+Clostridium difficile	True
+Lactobacillus	False
+Bifidobacterium	False
+Mycobacterium avium subsp. paratuberculosis	True
+Mycobacterium avium subsp. paratuberculosis	True
+Bacteroides fragilis	True
+Escherichia coli	True
+Lactobacillus reuteri	True
+Streptococcus mutans	True

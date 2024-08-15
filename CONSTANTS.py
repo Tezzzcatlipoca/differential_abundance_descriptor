@@ -34,7 +34,6 @@ INTRO_DRAFTING_PROMPT = "You are an expert microbiologist. Take the below abstra
 REVIEW_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create a review of a research paper. Take the below abstract summary and data table and draft a review based in both. Draft only the main body of the review and omit the review’s Introduction, Discussion or Conclusions parts, as these will be drafted by someone else. \n Abstract Summary \n %abstract_summary% \n Data Table \n %consolidated_table% "
 DISCUSSION_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create the ‘Discussion’ section of a research paper review. Take the below summary of the main body of the review and draft the Discussion section based in it. Draft only the Discussion section of the review and omit the review’s Introduction, Main Body or Conclusions parts, as these will be drafted by someone else. \n Summary of Research Paper Review: \n %review_summary%"
 CONCLUSIONS_DRAFTING_PROMPT = "You are an expert microbiologist. You were given the task to create the ‘Conclusions’ section of a research paper review. Take the below summary of the main body of the review and draft the Conclusions section based in it. Draft only the Conclusions section of the review and omit the review’s Introduction, Main Body or Discussions parts, as these will be drafted by someone else. \n Summary of Research Paper Review: \n %review_summary%"
-BIBLIOGRAPHY_EVALUATION_PROMPT = "You are an expert microbiologist. Please evaluate the attached scientific report's bibliography to determine its relevance to the overall topic. Specifically, assess if the sources cited are appropriate and pertinent to the subject matter. Additionally, identify any significant papers or key references that may be missing from the bibliography."
 SUMMARY_PROMPT = "Provide a very concise summary of the provided text: "
 STYLE_SUMMARY_PROMPT = "Create a list of the stylistic requirements mentioned in the below text."
 ELABORATE_PROMPT = "Elaborate further on the below review summary: "
@@ -54,6 +53,7 @@ GOOGLE_LOG_FILE = 'google_log.txt'
 
 # Evaluation
 URL_INDEX = 1
+BIBLIOGRAPHY_EVALUATION_PROMPT = "You are an expert microbiologist. Please evaluate the attached scientific report's bibliography to determine its relevance to the overall topic. Specifically, assess if the sources cited are appropriate and pertinent to the subject matter. Additionally, identify any significant papers or key references that may be missing from the bibliography."
 REPORT_EVALUATION_PROMPT = "From the attached scientific report, evaluate its formal elements and enumerate its strengths and its weaknesses."
 if NUMBER_OF_ELEMENTS == 4:
     EVALUATION_CRITERIA = [['Supplementary Information', '1.'], ['Species names', '2.'], ['Gene names', '3.'], ['Experimental information', '4.']]

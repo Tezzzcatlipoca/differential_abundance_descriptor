@@ -1,0 +1,14 @@
+domain	count	condition
+bmcbioinformatics.biomedcentral.com	1	Irritable Bowel Syndrome
+bmcgastroenterol.biomedcentral.com	7	Irritable Bowel Syndrome
+bmcmedicine.biomedcentral.com	1	Irritable Bowel Syndrome
+bmcmicrobiol.biomedcentral.com	1	Irritable Bowel Syndrome
+gutpathogens.biomedcentral.com	1	Irritable Bowel Syndrome
+jhpn.biomedcentral.com	1	Irritable Bowel Syndrome
+microbiomejournal.biomedcentral.com	5	Irritable Bowel Syndrome
+translational-medicine.biomedcentral.com	2	Irritable Bowel Syndrome
+womensmidlifehealthjournal.biomedcentral.com	1	Irritable Bowel Syndrome
+www.cambridge.org	3	Irritable Bowel Syndrome
+www.mdpi.com	3	Irritable Bowel Syndrome
+www.microbiologyresearch.org	3	Irritable Bowel Syndrome
+www.nature.com	27	Irritable Bowel Syndrome

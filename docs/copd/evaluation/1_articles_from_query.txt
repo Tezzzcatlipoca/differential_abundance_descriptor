@@ -1,0 +1,8 @@
+domain	count	condition
+bmcinfectdis.biomedcentral.com	1	COPD
+bmcpulmmed.biomedcentral.com	2	COPD
+respiratory-research.biomedcentral.com	5	COPD
+translational-medicine.biomedcentral.com	1	COPD
+www.cambridge.org	2	COPD
+www.mdpi.com	9	COPD
+www.nature.com	11	COPD

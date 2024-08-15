@@ -36,7 +36,7 @@ def query_openai(question: str, data_file: str = '', tmax_tokens=MAX_TOKENS, tem
     #if tmax_tokens > 14096:
     #    print("Model's max number of tokens is 4096! Truncating")
     #    tmax_tokens = 4096
-    api_key = os.environ['OPENAI_DISSERTATION_KEY']
+    api_key = os.environ['OPENAI_KEY']
     client = OpenAI(api_key=api_key)
     if data_file != '':
         table = ingest_file(data_file)

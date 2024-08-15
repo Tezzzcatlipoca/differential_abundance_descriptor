@@ -1,0 +1,5 @@
+each_consolidated	present_in_individual_table
+Bacteroides fragilis	True
+Escherichia coli	True
+Lactobacillus plantarum	True
+Streptococcus mutans	True

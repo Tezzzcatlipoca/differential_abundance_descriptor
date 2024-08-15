@@ -1,0 +1,11 @@
+each_consolidated	present_in_individual_table
+Escherichia coli	True
+Staphylococcus aureus	True
+Clostridium difficile	True
+Salmonella enterica	True
+Bacteroides fragilis	True
+Lactobacillus acidophilus	True
+Streptococcus mutans	True
+Mycobacterium avium subsp. paratuberculosis	True
+Mycobacterium avium subsp. paratuberculosis	True
+Lactobacillus reuteri	True

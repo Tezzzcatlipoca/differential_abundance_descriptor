@@ -1,0 +1,241 @@
+source	extracted_bacteria	is_present
+https://www.nature.com/articles/npre.2010.5006.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.5006.1	Staphylococcus aureus	False
+https://www.nature.com/articles/npre.2010.5006.1	Clostridium difficile	False
+https://www.nature.com/articles/npre.2010.5006.1	Salmonella enterica	False
+https://www.nature.com/articles/npre.2010.5006.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.5006.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.5006.1	Lactobacillus	False
+https://www.nature.com/articles/npre.2010.5006.1	Streptococcus	False
+https://www.nature.com/articles/npre.2010.5006.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.5006.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.5006.1	Lactobacillus acidophilus	False
+https://www.nature.com/articles/npre.2010.5006.1	Streptococcus mutans	False
+https://www.nature.com/articles/npre.2010.5006.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.5006.1	Lactobacillus plantarum	False
+https://www.nature.com/articles/npre.2010.5006.1	Streptococcus mutans	False
+https://www.nature.com/articles/npre.2010.5006.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.5006.1	Streptococcus pneumoniae	False
+https://www.nature.com/articles/npre.2010.5006.1	Lactobacillus plantarum	False
+https://www.nature.com/articles/npre.2010.5006.1	Pseudomonas aeruginosa	False
+https://www.nature.com/articles/npre.2010.5006.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.5006.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.5006.1	Clostridium difficile	False
+https://www.nature.com/articles/npre.2010.5006.1	Lactobacillus	False
+https://www.nature.com/articles/npre.2010.5006.1	Bifidobacterium	False
+https://www.nature.com/articles/npre.2010.5006.1	Mycobacterium avium subsp. paratuberculosis	False
+https://www.nature.com/articles/npre.2010.5006.1	Mycobacterium avium subsp. paratuberculosis	False
+https://www.nature.com/articles/npre.2010.5006.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.5006.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.5006.1	Lactobacillus reuteri	False
+https://www.nature.com/articles/npre.2010.5006.1	Streptococcus mutans	False
+https://www.nature.com/articles/npre.2010.4958.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4958.1	Staphylococcus aureus	False
+https://www.nature.com/articles/npre.2010.4958.1	Clostridium difficile	False
+https://www.nature.com/articles/npre.2010.4958.1	Salmonella enterica	False
+https://www.nature.com/articles/npre.2010.4958.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.4958.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4958.1	Lactobacillus	False
+https://www.nature.com/articles/npre.2010.4958.1	Streptococcus	False
+https://www.nature.com/articles/npre.2010.4958.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.4958.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4958.1	Lactobacillus acidophilus	False
+https://www.nature.com/articles/npre.2010.4958.1	Streptococcus mutans	False
+https://www.nature.com/articles/npre.2010.4958.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4958.1	Lactobacillus plantarum	False
+https://www.nature.com/articles/npre.2010.4958.1	Streptococcus mutans	False
+https://www.nature.com/articles/npre.2010.4958.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4958.1	Streptococcus pneumoniae	False
+https://www.nature.com/articles/npre.2010.4958.1	Lactobacillus plantarum	False
+https://www.nature.com/articles/npre.2010.4958.1	Pseudomonas aeruginosa	False
+https://www.nature.com/articles/npre.2010.4958.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.4958.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4958.1	Clostridium difficile	False
+https://www.nature.com/articles/npre.2010.4958.1	Lactobacillus	False
+https://www.nature.com/articles/npre.2010.4958.1	Bifidobacterium	False
+https://www.nature.com/articles/npre.2010.4958.1	Mycobacterium avium subsp. paratuberculosis	False
+https://www.nature.com/articles/npre.2010.4958.1	Mycobacterium avium subsp. paratuberculosis	False
+https://www.nature.com/articles/npre.2010.4958.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.4958.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4958.1	Lactobacillus reuteri	False
+https://www.nature.com/articles/npre.2010.4958.1	Streptococcus mutans	False
+https://www.nature.com/articles/npre.2010.4975.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4975.1	Staphylococcus aureus	False
+https://www.nature.com/articles/npre.2010.4975.1	Clostridium difficile	False
+https://www.nature.com/articles/npre.2010.4975.1	Salmonella enterica	False
+https://www.nature.com/articles/npre.2010.4975.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.4975.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4975.1	Lactobacillus	False
+https://www.nature.com/articles/npre.2010.4975.1	Streptococcus	False
+https://www.nature.com/articles/npre.2010.4975.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.4975.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4975.1	Lactobacillus acidophilus	False
+https://www.nature.com/articles/npre.2010.4975.1	Streptococcus mutans	False
+https://www.nature.com/articles/npre.2010.4975.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4975.1	Lactobacillus plantarum	False
+https://www.nature.com/articles/npre.2010.4975.1	Streptococcus mutans	False
+https://www.nature.com/articles/npre.2010.4975.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4975.1	Streptococcus pneumoniae	False
+https://www.nature.com/articles/npre.2010.4975.1	Lactobacillus plantarum	False
+https://www.nature.com/articles/npre.2010.4975.1	Pseudomonas aeruginosa	False
+https://www.nature.com/articles/npre.2010.4975.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.4975.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4975.1	Clostridium difficile	False
+https://www.nature.com/articles/npre.2010.4975.1	Lactobacillus	False
+https://www.nature.com/articles/npre.2010.4975.1	Bifidobacterium	False
+https://www.nature.com/articles/npre.2010.4975.1	Mycobacterium avium subsp. paratuberculosis	False
+https://www.nature.com/articles/npre.2010.4975.1	Mycobacterium avium subsp. paratuberculosis	False
+https://www.nature.com/articles/npre.2010.4975.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.4975.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4975.1	Lactobacillus reuteri	False
+https://www.nature.com/articles/npre.2010.4975.1	Streptococcus mutans	False
+https://www.nature.com/articles/s41598-022-26816-5	Escherichia coli	False
+https://www.nature.com/articles/s41598-022-26816-5	Staphylococcus aureus	False
+https://www.nature.com/articles/s41598-022-26816-5	Clostridium difficile	False
+https://www.nature.com/articles/s41598-022-26816-5	Salmonella enterica	False
+https://www.nature.com/articles/s41598-022-26816-5	Bacteroides fragilis	False
+https://www.nature.com/articles/s41598-022-26816-5	Escherichia coli	False
+https://www.nature.com/articles/s41598-022-26816-5	Lactobacillus	False
+https://www.nature.com/articles/s41598-022-26816-5	Streptococcus	False
+https://www.nature.com/articles/s41598-022-26816-5	Bacteroides fragilis	False
+https://www.nature.com/articles/s41598-022-26816-5	Escherichia coli	False
+https://www.nature.com/articles/s41598-022-26816-5	Lactobacillus acidophilus	False
+https://www.nature.com/articles/s41598-022-26816-5	Streptococcus mutans	False
+https://www.nature.com/articles/s41598-022-26816-5	Escherichia coli	False
+https://www.nature.com/articles/s41598-022-26816-5	Lactobacillus plantarum	False
+https://www.nature.com/articles/s41598-022-26816-5	Streptococcus mutans	False
+https://www.nature.com/articles/s41598-022-26816-5	Escherichia coli	False
+https://www.nature.com/articles/s41598-022-26816-5	Streptococcus pneumoniae	False
+https://www.nature.com/articles/s41598-022-26816-5	Lactobacillus plantarum	False
+https://www.nature.com/articles/s41598-022-26816-5	Pseudomonas aeruginosa	False
+https://www.nature.com/articles/s41598-022-26816-5	Bacteroides fragilis	False
+https://www.nature.com/articles/s41598-022-26816-5	Escherichia coli	False
+https://www.nature.com/articles/s41598-022-26816-5	Clostridium difficile	False
+https://www.nature.com/articles/s41598-022-26816-5	Lactobacillus	False
+https://www.nature.com/articles/s41598-022-26816-5	Bifidobacterium	False
+https://www.nature.com/articles/s41598-022-26816-5	Mycobacterium avium subsp. paratuberculosis	False
+https://www.nature.com/articles/s41598-022-26816-5	Mycobacterium avium subsp. paratuberculosis	False
+https://www.nature.com/articles/s41598-022-26816-5	Bacteroides fragilis	False
+https://www.nature.com/articles/s41598-022-26816-5	Escherichia coli	False
+https://www.nature.com/articles/s41598-022-26816-5	Lactobacillus reuteri	False
+https://www.nature.com/articles/s41598-022-26816-5	Streptococcus mutans	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Escherichia coli	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Staphylococcus aureus	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Clostridium difficile	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Salmonella enterica	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Bacteroides fragilis	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Escherichia coli	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Lactobacillus	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Streptococcus	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Bacteroides fragilis	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Escherichia coli	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Lactobacillus acidophilus	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Streptococcus mutans	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Escherichia coli	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Lactobacillus plantarum	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Streptococcus mutans	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Escherichia coli	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Streptococcus pneumoniae	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Lactobacillus plantarum	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Pseudomonas aeruginosa	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Bacteroides fragilis	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Escherichia coli	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Clostridium difficile	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Lactobacillus	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Bifidobacterium	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Mycobacterium avium subsp. paratuberculosis	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Mycobacterium avium subsp. paratuberculosis	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Bacteroides fragilis	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Escherichia coli	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Lactobacillus reuteri	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Streptococcus mutans	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Escherichia coli	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Staphylococcus aureus	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Clostridium difficile	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Salmonella enterica	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Bacteroides fragilis	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Escherichia coli	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Lactobacillus	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Streptococcus	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Bacteroides fragilis	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Escherichia coli	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Lactobacillus acidophilus	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Streptococcus mutans	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Escherichia coli	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Lactobacillus plantarum	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Streptococcus mutans	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Escherichia coli	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Streptococcus pneumoniae	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Lactobacillus plantarum	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Pseudomonas aeruginosa	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Bacteroides fragilis	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Escherichia coli	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Clostridium difficile	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Lactobacillus	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Bifidobacterium	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Mycobacterium avium subsp. paratuberculosis	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Mycobacterium avium subsp. paratuberculosis	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Bacteroides fragilis	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Escherichia coli	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Lactobacillus reuteri	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Streptococcus mutans	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Escherichia coli	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Staphylococcus aureus	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Clostridium difficile	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Salmonella enterica	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Bacteroides fragilis	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Escherichia coli	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Lactobacillus	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Streptococcus	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Bacteroides fragilis	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Escherichia coli	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Lactobacillus acidophilus	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Streptococcus mutans	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Escherichia coli	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Lactobacillus plantarum	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Streptococcus mutans	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Escherichia coli	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Streptococcus pneumoniae	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Lactobacillus plantarum	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Pseudomonas aeruginosa	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Bacteroides fragilis	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Escherichia coli	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Clostridium difficile	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Lactobacillus	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Bifidobacterium	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Mycobacterium avium subsp. paratuberculosis	True
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Mycobacterium avium subsp. paratuberculosis	True
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Bacteroides fragilis	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Escherichia coli	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Lactobacillus reuteri	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Streptococcus mutans	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Escherichia coli	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Staphylococcus aureus	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Clostridium difficile	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Salmonella enterica	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Bacteroides fragilis	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Escherichia coli	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Lactobacillus	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Streptococcus	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Bacteroides fragilis	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Escherichia coli	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Lactobacillus acidophilus	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Streptococcus mutans	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Escherichia coli	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Lactobacillus plantarum	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Streptococcus mutans	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Escherichia coli	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Streptococcus pneumoniae	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Lactobacillus plantarum	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Pseudomonas aeruginosa	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Bacteroides fragilis	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Escherichia coli	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Clostridium difficile	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Lactobacillus	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Bifidobacterium	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Mycobacterium avium subsp. paratuberculosis	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Mycobacterium avium subsp. paratuberculosis	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Bacteroides fragilis	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Escherichia coli	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Lactobacillus reuteri	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Streptococcus mutans	False

@@ -1,0 +1,60 @@
+source	extracted_bacteria	is_present
+https://www.nature.com/articles/s41598-022-05756-0	Escherichia coli	True
+https://www.nature.com/articles/s41598-022-05756-0	Clostridium difficile	False
+https://www.nature.com/articles/s41598-022-05756-0	Lactobacillus acidophilus	False
+https://www.nature.com/articles/s41598-022-05756-0	Staphylococcus aureus	True
+https://www.nature.com/articles/s41598-020-75225-z	Bacteroides fragilis	False
+https://www.nature.com/articles/s41598-020-75225-z	Escherichia coli	False
+https://www.nature.com/articles/s41598-020-75225-z	Lactobacillus	False
+https://www.nature.com/articles/s41598-020-75225-z	Streptococcus	False
+https://www.nature.com/articles/s41396-021-01123-5	Bacteroides fragilis	False
+https://www.nature.com/articles/s41396-021-01123-5	Escherichia coli	True
+https://www.nature.com/articles/s41396-021-01123-5	Lactobacillus reuteri	False
+https://www.nature.com/articles/s41564-022-01103-1	Bacteroides fragilis	False
+https://www.nature.com/articles/s41564-022-01103-1	Escherichia coli	False
+https://www.nature.com/articles/s41564-022-01103-1	Clostridium difficile	True
+https://www.nature.com/articles/s41564-022-01103-1	Streptococcus pneumoniae	False
+https://www.nature.com/articles/s41564-022-01103-1	Helicobacter pylori	False
+https://www.nature.com/articles/s41467-023-40552-y	Bacteroides fragilis	False
+https://www.nature.com/articles/s41467-023-40552-y	Escherichia coli	False
+https://www.nature.com/articles/s41467-023-40552-y	Lactobacillus	True
+https://www.nature.com/articles/s41467-023-40552-y	Streptococcus	False
+https://www.nature.com/articles/srep12693	Bacteroides fragilis	False
+https://www.nature.com/articles/srep12693	Escherichia coli	False
+https://www.nature.com/articles/srep12693	Lactobacillus	True
+https://www.nature.com/articles/srep12693	Streptococcus	False
+https://www.nature.com/articles/srep08508	Bacteroides fragilis	False
+https://www.nature.com/articles/srep08508	Escherichia coli	False
+https://www.nature.com/articles/srep08508	Staphylococcus aureus	False
+https://www.nature.com/articles/srep08508	Clostridium difficile	False
+https://www.nature.com/articles/srep08508	Helicobacter pylori	False
+https://www.nature.com/articles/s41598-019-49096-y	Bacteroides fragilis	False
+https://www.nature.com/articles/s41598-019-49096-y	Escherichia coli	False
+https://www.nature.com/articles/s41598-019-49096-y	Lactobacillus reuteri	False
+https://www.nature.com/articles/s41398-020-01071-2	Bacteroides fragilis	False
+https://www.nature.com/articles/s41398-020-01071-2	Escherichia coli	False
+https://www.nature.com/articles/s41398-020-01071-2	Clostridium difficile	False
+https://www.nature.com/articles/s41398-020-01071-2	Lactobacillus	True
+https://www.nature.com/articles/s41398-020-01071-2	Streptococcus	False
+https://www.nature.com/articles/s41598-024-60029-2	Escherichia coli	False
+https://www.nature.com/articles/s41598-024-60029-2	Streptococcus mutans	False
+https://www.nature.com/articles/s41598-024-60029-2	Lactobacillus acidophilus	True
+https://www.nature.com/articles/s41598-024-60029-2	Bifidobacterium longum	True
+https://www.nature.com/articles/s41598-023-50293-z	Escherichia coli	False
+https://www.nature.com/articles/s41598-023-50293-z	Bacillus subtilis	False
+https://www.nature.com/articles/s41598-023-50293-z	Staphylococcus aureus	False
+https://www.nature.com/articles/s41598-023-50293-z	Clostridium difficile	False
+https://www.nature.com/articles/s41598-023-50293-z	Helicobacter pylori	False
+https://www.nature.com/articles/s41598-023-45300-2	Escherichia coli	False
+https://www.nature.com/articles/s41598-023-45300-2	Bacteroides fragilis	False
+https://www.nature.com/articles/s41598-023-45300-2	Lactobacillus plantarum	False
+https://www.nature.com/articles/s41598-023-45300-2	Streptococcus mutans	False
+https://www.nature.com/articles/s41598-022-09436-x	Escherichia coli	False
+https://www.nature.com/articles/s41598-022-09436-x	Bacteroides fragilis	False
+https://www.nature.com/articles/s41598-022-09436-x	Lactobacillus reuteri	False
+https://www.nature.com/articles/s41598-022-09436-x	Clostridium difficile	False
+https://www.nature.com/articles/s41396-021-01123-5	Bacteroides fragilis	False
+https://www.nature.com/articles/s41396-021-01123-5	Escherichia coli	True
+https://www.nature.com/articles/s41396-021-01123-5	Lactobacillus	True
+https://www.nature.com/articles/s41396-021-01123-5	Clostridium difficile	True
+https://www.nature.com/articles/s41396-021-01123-5	Streptococcus	False

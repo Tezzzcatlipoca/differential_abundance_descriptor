@@ -1,0 +1,14 @@
+domain	count	condition
+arthritis-research.biomedcentral.com	6	rheumatoid arthritis
+bioelecmed.biomedcentral.com	1	rheumatoid arthritis
+bmcgenomics.biomedcentral.com	1	rheumatoid arthritis
+bmcoralhealth.biomedcentral.com	1	rheumatoid arthritis
+bmcsystbiol.biomedcentral.com	1	rheumatoid arthritis
+genomemedicine.biomedcentral.com	2	rheumatoid arthritis
+microbiomejournal.biomedcentral.com	2	rheumatoid arthritis
+nutritionj.biomedcentral.com	1	rheumatoid arthritis
+trialsjournal.biomedcentral.com	1	rheumatoid arthritis
+www.cambridge.org	2	rheumatoid arthritis
+www.mdpi.com	7	rheumatoid arthritis
+www.microbiologyresearch.org	1	rheumatoid arthritis
+www.nature.com	22	rheumatoid arthritis

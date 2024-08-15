@@ -1,0 +1,9 @@
+each_consolidated	present_in_individual_table
+Escherichia coli	True
+Clostridium difficile	True
+Lactobacillus acidophilus	True
+Staphylococcus aureus	True
+Bacteroides fragilis	True
+Lactobacillus reuteri	True
+Streptococcus pneumoniae	True
+Helicobacter pylori	True

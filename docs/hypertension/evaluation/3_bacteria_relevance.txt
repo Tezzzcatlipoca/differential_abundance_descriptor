@@ -1,0 +1,51 @@
+source	extracted_bacteria	is_present
+https://www.nature.com/articles/s41598-018-27682-w	Bacteroides fragilis	False
+https://www.nature.com/articles/s41598-018-27682-w	Escherichia coli	False
+https://www.nature.com/articles/s41598-018-27682-w	Lactobacillus	True
+https://www.nature.com/articles/s41598-018-27682-w	Clostridium difficile	True
+https://www.nature.com/articles/s41598-018-27682-w	Streptococcus	False
+https://www.mdpi.com/2072-6643/16/7/1025	Bacteroides fragilis	False
+https://www.mdpi.com/2072-6643/16/7/1025	Escherichia coli	False
+https://www.mdpi.com/2072-6643/16/7/1025	Lactobacillus	True
+https://www.mdpi.com/2072-6643/16/7/1025	Clostridium difficile	False
+https://www.mdpi.com/2072-6643/16/7/1025	Streptococcus	True
+https://www.mdpi.com/2227-9059/12/1/169	Escherichia coli	False
+https://www.mdpi.com/2227-9059/12/1/169	Lactobacillus	True
+https://www.mdpi.com/2227-9059/12/1/169	Bifidobacterium	True
+https://www.mdpi.com/2227-9059/12/1/169	Clostridium difficile	True
+https://www.mdpi.com/2227-9059/12/1/169	Streptococcus	True
+https://www.mdpi.com/2072-6643/15/21/4549	Bacteroides fragilis	False
+https://www.mdpi.com/2072-6643/15/21/4549	Escherichia coli	True
+https://www.mdpi.com/2072-6643/15/21/4549	Lactobacillus plantarum	True
+https://www.mdpi.com/2072-6643/15/21/4549	Streptococcus mutans	False
+https://www.mdpi.com/2218-273X/13/9/1274	Escherichia coli	False
+https://www.mdpi.com/2218-273X/13/9/1274	Streptococcus pneumoniae	False
+https://www.mdpi.com/2218-273X/13/9/1274	Lactobacillus plantarum	False
+https://www.mdpi.com/2218-273X/13/9/1274	Clostridium difficile	False
+https://www.mdpi.com/2218-273X/13/9/1274	Pseudomonas aeruginosa	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-022-03602-5	Escherichia coli	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-022-03602-5	Bacteroides fragilis	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-022-03602-5	Clostridium difficile	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-022-03602-5	Streptococcus pneumoniae	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-023-04247-8	Escherichia coli	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-023-04247-8	Streptococcus mutans	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-023-04247-8	Lactobacillus acidophilus	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-023-04247-8	Clostridium difficile	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-020-02282-3	Escherichia coli	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-020-02282-3	Bacteroides fragilis	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-020-02282-3	Lactobacillus	True
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-020-02282-3	Clostridium difficile	False
+https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-020-02282-3	Streptococcus	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/association-of-hypertension-with-the-severity-and-fatality-of-sarscov2-infection-a-metaanalysis/4116FAD7D866737099F976E7E7FAEB15	Escherichia coli	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/association-of-hypertension-with-the-severity-and-fatality-of-sarscov2-infection-a-metaanalysis/4116FAD7D866737099F976E7E7FAEB15	Staphylococcus aureus	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/association-of-hypertension-with-the-severity-and-fatality-of-sarscov2-infection-a-metaanalysis/4116FAD7D866737099F976E7E7FAEB15	Streptococcus pneumoniae	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/association-of-hypertension-with-the-severity-and-fatality-of-sarscov2-infection-a-metaanalysis/4116FAD7D866737099F976E7E7FAEB15	Salmonella enterica	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/estimation-of-casefatality-rate-in-covid19-patients-with-hypertension-and-diabetes-mellitus-in-the-new-york-state-a-preliminary-report/9EB6172951AFC01E14338554513E157A	Escherichia coli	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/estimation-of-casefatality-rate-in-covid19-patients-with-hypertension-and-diabetes-mellitus-in-the-new-york-state-a-preliminary-report/9EB6172951AFC01E14338554513E157A	Staphylococcus aureus	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/estimation-of-casefatality-rate-in-covid19-patients-with-hypertension-and-diabetes-mellitus-in-the-new-york-state-a-preliminary-report/9EB6172951AFC01E14338554513E157A	Streptococcus pneumoniae	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/estimation-of-casefatality-rate-in-covid19-patients-with-hypertension-and-diabetes-mellitus-in-the-new-york-state-a-preliminary-report/9EB6172951AFC01E14338554513E157A	Pseudomonas aeruginosa	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/estimation-of-casefatality-rate-in-covid19-patients-with-hypertension-and-diabetes-mellitus-in-the-new-york-state-a-preliminary-report/9EB6172951AFC01E14338554513E157A	Mycobacterium tuberculosis	False
+https://link.springer.com/article/10.1186/s40168-016-0222-x	Bacteroides fragilis	False
+https://link.springer.com/article/10.1186/s40168-016-0222-x	Escherichia coli	False
+https://link.springer.com/article/10.1186/s40168-016-0222-x	Lactobacillus	True
+https://link.springer.com/article/10.1186/s40168-016-0222-x	Streptococcus	False

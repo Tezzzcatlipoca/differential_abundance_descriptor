@@ -1,0 +1,6 @@
+domain	count	condition
+gutpathogens.biomedcentral.com	1	Crohn's disease
+humgenomics.biomedcentral.com	1	Crohn's disease
+www.cambridge.org	6	Crohn's disease
+www.microbiologyresearch.org	3	Crohn's disease
+www.nature.com	4	Crohn's disease

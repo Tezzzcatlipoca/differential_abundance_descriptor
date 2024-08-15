@@ -1,0 +1,5 @@
+criterion	positives	total
+Supplementary Information	15	15
+Species names	15	15
+Gene names	15	15
+Experimental information	15	15

@@ -1,0 +1,7 @@
+domain	count	condition
+bmcmicrobiol.biomedcentral.com	1	hypertension
+translational-medicine.biomedcentral.com	3	hypertension
+trialsjournal.biomedcentral.com	1	hypertension
+www.cambridge.org	4	hypertension
+www.mdpi.com	5	hypertension
+www.nature.com	1	hypertension

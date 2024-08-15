@@ -1,0 +1,31 @@
+source	extracted_bacteria	is_present
+https://www.nature.com/articles/npre.2010.5006.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.5006.1	Staphylococcus aureus	False
+https://www.nature.com/articles/npre.2010.5006.1	Clostridium difficile	False
+https://www.nature.com/articles/npre.2010.5006.1	Salmonella enterica	False
+https://www.nature.com/articles/npre.2010.4958.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.4958.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4958.1	Lactobacillus	False
+https://www.nature.com/articles/npre.2010.4958.1	Streptococcus	False
+https://www.nature.com/articles/npre.2010.4975.1	Bacteroides fragilis	False
+https://www.nature.com/articles/npre.2010.4975.1	Escherichia coli	False
+https://www.nature.com/articles/npre.2010.4975.1	Lactobacillus acidophilus	False
+https://www.nature.com/articles/npre.2010.4975.1	Streptococcus mutans	False
+https://www.nature.com/articles/s41598-022-26816-5	Escherichia coli	False
+https://www.nature.com/articles/s41598-022-26816-5	Lactobacillus plantarum	False
+https://www.nature.com/articles/s41598-022-26816-5	Streptococcus mutans	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Escherichia coli	True
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Streptococcus pneumoniae	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Lactobacillus plantarum	False
+https://www.microbiologyresearch.org/content/journal/micro/10.1099/mic.0.000336	Pseudomonas aeruginosa	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Bacteroides fragilis	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Escherichia coli	True
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Clostridium difficile	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Lactobacillus	False
+https://gutpathogens.biomedcentral.com/articles/10.1186/1757-4749-1-15	Bifidobacterium	False
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Mycobacterium avium subsp. paratuberculosis	True
+https://www.cambridge.org/core/journals/epidemiology-and-infection/article/comparative-study-of-mycobacterium-paratuberculosis-strains-isolated-from-crohns-disease-and-johnes-disease-using-restriction-fragment-length-polymorphism-and-arbitrarily-primed-polymerase-chain-reaction/4067FF0960CE1D18FC67A93BBC3E029A	Mycobacterium avium subsp. paratuberculosis	True
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Bacteroides fragilis	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Escherichia coli	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Lactobacillus reuteri	False
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4633303/	Streptococcus mutans	False
